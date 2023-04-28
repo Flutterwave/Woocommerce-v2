@@ -25,12 +25,15 @@ const FLW_ASSETS = getBlocksConfiguration()?.asset_url ?? null;
 const paymentMethod = {
 	name: PAYMENT_METHOD_NAME,
 	label: (
-		<img
-			src={ `${ FLW_ASSETS }/img/rave.png` }
+		<div style={{ display: 'flex', flexDirection: 'row', rowGap: '.5em'}}>
+			<img
+			src={ `${ FLW_ASSETS }/img/flutterwave-full.svg` }
 			alt={ decodeEntities(
-				settings.title || __( 'Flutterwave', 'woocommerce-rave' )
+				getBlocksConfiguration()?.title || __( 'Flutterwave', 'woocommerce-rave' )
 			) }
-		/>
+			/>
+			<b><h4>Flutterwave</h4></b>
+		</div>
 	),
 	placeOrderButtonLabel: __(
 		'Proceed to Flutterwave',

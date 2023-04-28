@@ -4,7 +4,7 @@
 import { getSetting, WC_ } from '@woocommerce/settings';
 
 export const getBlocksConfiguration = () => {
-	const flutterwaveServerData = getSetting( 'flutterwave_data', null );
+	const flutterwaveServerData = getSetting( 'rave_data', null );
 
 	if ( ! flutterwaveServerData ) {
 		throw new Error( 'Flutterwave initialization data is not available' );
