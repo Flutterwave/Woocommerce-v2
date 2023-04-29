@@ -1,11 +1,11 @@
 === Flutterwave WooCommerce ===
 Contributors: theflutterwave
-Tags: rave,flutterwave, woocommerce, payments, nigeria, mastercard, visa, target,Naira,payments,verve,donation,church,shop,store, ghana, kenya, international, mastercard, visa
+Tags: fintech,flutterwave, woocommerce, payments, nigeria, mastercard, visa, target,Naira,payments,verve,donation,church,shop,store, ghana, kenya, international, mastercard, visa
 Requires at least: 3.1
 Tested up to: 6.1
 Stable tag: 2.3.2
 License: MIT
-License URI: https://github.com/Flutterwave/rave-woocommerce/blob/master/LICENSE
+License URI: https://github.com/Flutterwave/Woocommerce/blob/master/LICENSE
 
 The WooCommerce Plugin makes it very easy and quick to add Flutterwave Payment option on Checkout for your online store. Accept Credit card, Debit card and Bank account payment directly on your store with the Flutterwave Plugin for WooCommerce.
 
@@ -23,10 +23,7 @@ Accept Credit card, Debit card and Bank account payment directly on your store w
 
 1. Flutterwave for business [API Keys](https://developer.flutterwave.com/docs/integration-guides/authentication)
 2. [WooCommerce](https://woocommerce.com/)
-3. [WooCommerce Shipping & Tax](https://wordpress.org/plugins/woocommerce-services/)
-4. [Facebook for WooCommerce](https://wordpress.org/plugins/facebook-for-woocommerce/)
-5. [Google Ads & Marketing by Kliken](https://wordpress.org/plugins/kliken-marketing-for-google/)
-6. Supported PHP version: 5.6.0 - 8.1.0
+6. Supported PHP version: 7.4.0 - 8.1.0
 
 == Installation ==
 
@@ -38,7 +35,7 @@ Accept Credit card, Debit card and Bank account payment directly on your store w
 *   Confirm the installation.
 *   Activate the plugin.
 *   Click on "WooCommerce > Settings" from the left menu and click the "Checkout" tab.
-*   Click on the __Rave__ link from the available Checkout Options
+*   Click on the __Flutterwave__ link from the available Checkout Options
 *   Configure your __Flutterwave Woocommerce__ settings accordingly.
 
 = Manual Installation =
@@ -47,17 +44,17 @@ Accept Credit card, Debit card and Bank account payment directly on your store w
 3.  Click on the "Upload" option, then click "Choose File" to select the zip file you downloaded. Click "OK" and "Install Now" to complete the installation.
 4.  Activate the plugin.
 5.  Click on "WooCommerce > Settings" from the left menu and click the "Checkout" tab.
-6.  Click on the __Rave__ link from the available Checkout Options
+6.  Click on the __Flutterwave__ link from the available Checkout Options
 7. Configure your __Flutterwave WooCommerce__ settings accordingly.
 
 For FTP manual installation, [check here](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
 
 = Configure the plugin =
-To configure the plugin, go to __WooCommerce > Settings__ from the left menu, click __Checkout__ tab. Click on __Rave__.
+To configure the plugin, go to __WooCommerce > Settings__ from the left menu, click __Checkout__ tab. Click on __Flutterwave__.
 
-* __Enable/Disable__ - check the box to enable Rave Payment Gateway.
-* __Pay Button Public Key__ - Enter your public key which can be retrieved from the "Pay Buttons" page on your Rave account dashboard.
-* __Modal Title__ - (Optional) customize the title of the Pay Modal. Default is Rave.
+* __Enable/Disable__ - check the box to enable Flutterwave WooCommerce.
+* __Pay Button Public Key__ - Enter your public key which can be retrieved from the "Pay Buttons" page on your Flutterwave account dashboard.
+* __Modal Title__ - (Optional) customize the title of the Pay Modal. Default is Flutterwave.
 * Click __Save Changes__ to save your changes.
 
 = Webhooks =
