@@ -16,3 +16,5 @@ docker-compose -f .docker/docker-compose.yml exec -u www-data wordpress \
 	--configuration /var/www/html/wp-content/plugins/woocommerce-rave/phpunit.xml.dist \
 	--coverage-clover coverage.xml .\
 	$*
+
+docker-compose -f .docker/docker-compose.yml cp wordpress:/var/www/html/wp-content/plugins/woocommerce-rave/coverage.xml .
