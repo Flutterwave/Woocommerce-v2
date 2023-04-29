@@ -24,13 +24,6 @@ jobs:
                   SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
                   SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
                   SLUG: rave-woocommerce-payment-gateway
-
-            - name: Upload release Assets
-              uses: AButler/upload-release-assets@v2.0
-              with:
-                files: 'woocommerce-rave.zip'
-                repo-token: ${{ secrets.GITHUB_TOKEN }}
-
             - name: push build status to Slack
               uses: 8398a7/action-slack@v3
               with:
