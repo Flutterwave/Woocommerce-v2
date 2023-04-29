@@ -110,7 +110,7 @@ final class FLW_WC_Payment_Gateway_Request {
 			'currency'        => $currency,
 			'payment_options' => 'card',
 			'redirect_url'    => $this->notify_url . '?order_id=' . $order_id,
-			'payload_hash'   => $checkout_hash,
+			'payload_hash'    => $checkout_hash,
 			'customer'        => array(
 				'email'        => $email,
 				'phone_number' => $order->get_billing_phone(),
