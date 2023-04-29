@@ -244,7 +244,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 			'secret_hash'        => array(
 				'title'       => __( 'Enter Secret Hash', 'woocommerce-rave' ),
 				'type'        => 'text',
-				'description' => __( 'Ensure that <b>SECRET HASH</b> is the same with the one on your Flutterwave dashboard', 'woocommerce-rave' ),
+				'description' => __( 'Please change from default hash and ensure that <b>SECRET HASH</b> is the same with the one on your Flutterwave dashboard', 'woocommerce-rave' ),
 				'default'     => hash( 'sha256', 'Rave-Secret-Hash' ),
 			),
 			'title'              => array(
@@ -260,25 +260,25 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 				'default'     => 'Powered by Flutterwave: Accepts Mastercard, Visa, Verve, Discover, AMEX, Diners Club and Union Pay.',
 			),
 			'test_public_key'    => array(
-				'title'       => __( 'Rave Test Public Key', 'woocommerce-rave' ),
+				'title'       => __( 'Test Public Key', 'woocommerce-rave' ),
 				'type'        => 'text',
 				'description' => __( 'Required! Enter your Flutterwave test public key here', 'woocommerce-rave' ),
 				'default'     => '',
 			),
 			'test_secret_key'    => array(
-				'title'       => __( 'Rave Test Secret Key', 'woocommerce-rave' ),
+				'title'       => __( 'Test Secret Key', 'woocommerce-rave' ),
 				'type'        => 'password',
 				'description' => __( 'Required! Enter your Flutterwave test secret key here', 'woocommerce-rave' ),
 				'default'     => '',
 			),
 			'live_public_key'    => array(
-				'title'       => __( 'Rave Live Public Key', 'woocommerce-rave' ),
+				'title'       => __( 'Live Public Key', 'woocommerce-rave' ),
 				'type'        => 'text',
 				'description' => __( 'Required! Enter your Flutterwave live public key here', 'woocommerce-rave' ),
 				'default'     => '',
 			),
 			'live_secret_key'    => array(
-				'title'       => __( 'Rave Live Secret Key', 'woocommerce-rave' ),
+				'title'       => __( 'Live Secret Key', 'woocommerce-rave' ),
 				'type'        => 'password',
 				'description' => __( 'Required! Enter your Flutterwave live secret key here', 'woocommerce-rave' ),
 				'default'     => '',
