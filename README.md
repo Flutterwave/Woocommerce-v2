@@ -32,27 +32,26 @@ Available features include:
 
 1. Flutterwave for business [API Keys](https://developer.flutterwave.com/docs/integration-guides/authentication)
 2. [WooCommerce](https://woocommerce.com/)
-3. [WooCommerce Shipping & Tax](https://wordpress.org/plugins/woocommerce-services/)
-4. [Facebook for WooCommerce](https://wordpress.org/plugins/facebook-for-woocommerce/)
-5. [Google Ads & Marketing by Kliken](https://wordpress.org/plugins/kliken-marketing-for-google/)
 6. Supported PHP version: 5.6.0 - 8.1.0
 
 
 ## Installation
 
-To install the plugin, you need to first clone the repository from [GitHub](https://github.com/Flutterwave/rave-woocommerce) and then upload the folder to your WordPress plugins directory.
+### Github Zip Download
+
+To install the plugin, you need to first clone the repository from [GitHub](https://github.com/Flutterwave/WooCommerce) and then upload the folder to your WordPress plugins directory. For WooCommerce Blocks support, you would need to build block assets by running the command `npm install && npm run build:webpack`.
 
 ### Automatic Installation
 
 - Login to your WordPress Dashboard.
 - Click on "Plugins > Add New" from the left menu.
-- In the search box type **Rave Woocommerce Payment Gateway**.
-- Click on **Install Now** on **Rave Woocommerce Payment Gateway** to install the plugin on your site.
+- In the search box type **Flutterwave Woocommerce**.
+- Click on **Install Now** on **Flutterwave WooCommerce** to install the plugin on your site.
 - Confirm the installation.
 - Activate the plugin.
 - Click on "WooCommerce > Settings" from the left menu and click the **"Payments"** tab.
-- Click on the **Rave** link from the available Checkout Options
-- Configure your **Rave Payment Gateway** settings accordingly.
+- Click on the **Flutterwave** link from the available Checkout Options
+- Configure your **Flutterwave** settings accordingly.
 
 ### Manual Installation
 
@@ -61,10 +60,10 @@ To install the plugin, you need to first clone the repository from [GitHub](http
 - Click on the "Upload" option, then click "Choose File" to select the zip file you downloaded. Click "OK" and "Install Now" to complete the installation.
 - Activate the plugin.
 - Click on "WooCommerce > Settings" from the left menu and click the **"Payments"** tab.
-- Click on the **Rave** link from the available Checkout Options
-- Configure your **Rave Payment Gateway** settings accordingly.
+- Click on the **Flutterwave** link from the available Checkout Options
+- Configure your **Flutterwave** settings accordingly.
 
-For FTP manual installation, [check here](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
+For FTP manual installation, [check here](https://wordpress.org/documentation/article/manage-plugins/).
 
 ## Best Practices
 
