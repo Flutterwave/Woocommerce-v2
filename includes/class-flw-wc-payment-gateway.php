@@ -220,6 +220,30 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * WooCommerce admin settings override.
+	 */
+	public function admin_options() {
+		?>
+		<h3><?php esc_attr_e( 'Flutterwave WooCommerce', 'rave-woocommerce-payment-gateway' ); ?></h3>
+		<table class="form-table">
+			<tr valign="top">
+				<th scope="row">
+					<label><?php esc_attr_e( 'Webhook Instruction', 'rave-woocommerce-payment-gateway' ); ?></label>
+				</th>
+				<td class="forminp forminp-text">
+					<p class="description">
+						<?php esc_attr_e( 'Please copy this webhook URL and paste on the webhook section on your dashboard', 'rave-woocommerce-payment-gateway' ); ?><strong style="color: red"><pre><code><?php echo esc_url( WC()->api_request_url( 'Flw_WC_Payment_Webhook' ) ); ?></code></pre></strong><a href="https://app.flutterwave.com/dashboard/settings/webhooks" target="_blank">Flutterwave Account</a>
+					</p>
+				</td>
+			</tr>
+			<?php
+				$this->generate_settings_html();
+			?>
+		</table>
+		<?php
+	}
+
+	/**
 	 * Initial gateway settings form fields
 	 *
 	 * @return void
@@ -235,11 +259,6 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 				'description' => __( 'Enable Flutterwave as a payment option on the checkout page', 'rave-woocommerce-payment-gateway' ),
 				'default'     => 'no',
 				'desc_tip'    => true,
-			),
-			'webhook'            => array(
-				'title'       => __( 'Webhook Instruction', 'rave-woocommerce-payment-gateway' ),
-				'type'        => 'hidden',
-				'description' => __( 'Please copy this webhook URL and paste on the webhook section on your dashboard', 'rave-woocommerce-payment-gateway' ) . esc_html( '<strong style="color: red"><pre><code>' . esc_url( WC()->api_request_url( 'Flw_WC_Payment_Webhook' ) ) . '</code></pre></strong> (<a href="' . esc_url( 'https://app.flutterwave.com/dashboard/settings/webhooks' ) . '" target="_blank">' . __( 'Flutterwave Account', 'rave-woocommerce-payment-gateway' ) . '</a>)' ),
 			),
 			'secret_hash'        => array(
 				'title'       => __( 'Enter Secret Hash', 'rave-woocommerce-payment-gateway' ),
