@@ -11,7 +11,7 @@
     <coverage processUncoveredFiles="true">
         <include>
             <directory prefix="test-" suffix=".php">./includes</directory>
-            <file>./woocommerce-rave.php</file>
+            <file>./rave-woocommerce-payment-gateway.php</file>
         </include>
     </coverage>
     <testsuites>

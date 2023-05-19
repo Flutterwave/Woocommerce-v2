@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 	<p>
 		<?php
 		// Translators: %s Plugin name.
-		echo sprintf( esc_html__( '%s requires WooCommerce to be installed and activated in order to serve updates.', 'woocommerce-rave' ), '<strong>' . esc_html__( 'Flutterwave WooCommerce', 'woocommerce-rave' ) . '</strong>' );
+		echo sprintf( esc_html__( '%s requires WooCommerce to be installed and activated in order to serve updates.', 'rave-woocommerce-payment-gateway' ), '<strong>' . esc_html__( 'Flutterwave WooCommerce', 'rave-woocommerce-payment-gateway' ) . '</strong>' );
 		?>
 	</p>
 
@@ -22,10 +22,10 @@ defined( 'ABSPATH' ) || exit;
 			$installed_plugins = get_plugins();
 			if ( isset( $installed_plugins['woocommerce/woocommerce.php'] ) ) :
 				?>
-				<a href="<?php echo esc_url( wp_nonce_url( self_admin_url( 'plugins.php?action=activate&plugin=woocommerce/woocommerce.php&plugin_status=active' ), 'activate-plugin_woocommerce/woocommerce.php' ) ); ?>" class="button button-primary"><?php esc_html_e( 'Activate WooCommerce', 'woocommerce-rave' ); ?></a>
+				<a href="<?php echo esc_url( wp_nonce_url( self_admin_url( 'plugins.php?action=activate&plugin=woocommerce/woocommerce.php&plugin_status=active' ), 'activate-plugin_woocommerce/woocommerce.php' ) ); ?>" class="button button-primary"><?php esc_html_e( 'Activate WooCommerce', 'rave-woocommerce-payment-gateway' ); ?></a>
 			<?php endif; ?>
-			<?php if ( current_user_can( 'deactivate_plugin', 'woocommerce-rave/woocommerce-rave.php' ) ) : ?>
-				<a href="<?php echo esc_url( wp_nonce_url( 'plugins.php?action=deactivate&plugin=woocommerce-rave/woocommerce-rave.php&plugin_status=inactive', 'deactivate-plugin_woocommerce-rave/woocommerce-rave.php' ) ); ?>" class="button button-secondary"><?php esc_html_e( 'Turn off Flutterwave WooCommerce', 'woocommerce-rave' ); ?></a>
+			<?php if ( current_user_can( 'deactivate_plugin', 'rave-woocommerce-payment-gateway/rave-woocommerce-payment-gateway.php' ) ) : ?>
+				<a href="<?php echo esc_url( wp_nonce_url( 'plugins.php?action=deactivate&plugin=rave-woocommerce-payment-gateway/rave-woocommerce-payment-gateway.php&plugin_status=inactive', 'deactivate-plugin_rave-woocommerce-payment-gateway/rave-woocommerce-payment-gateway.php' ) ); ?>" class="button button-secondary"><?php esc_html_e( 'Turn off Flutterwave WooCommerce', 'rave-woocommerce-payment-gateway' ); ?></a>
 			<?php endif; ?>
 		</p>
 	<?php else : ?>
@@ -37,9 +37,9 @@ defined( 'ABSPATH' ) || exit;
 		}
 		?>
 		<p>
-			<a href="<?php echo esc_url( $url ); ?>" class="button button-primary"><?php esc_html_e( 'Install WooCommerce', 'woocommerce-rave' ); ?></a>
-			<?php if ( current_user_can( 'deactivate_plugin', 'woocommerce-rave/woocommerce-rave.php' ) ) : ?>
-				<a href="<?php echo esc_url( wp_nonce_url( 'plugins.php?action=deactivate&plugin=woocommerce-rave/woocommerce-rave.php&plugin_status=inactive', 'deactivate-plugin_woocommerce-rave/woocommerce-rave.php' ) ); ?>" class="button button-secondary"><?php esc_html_e( 'Turn off Flutterwave WooCommerce', 'woocommerce-rave' ); ?></a>
+			<a href="<?php echo esc_url( $url ); ?>" class="button button-primary"><?php esc_html_e( 'Install WooCommerce', 'rave-woocommerce-payment-gateway' ); ?></a>
+			<?php if ( current_user_can( 'deactivate_plugin', 'rave-woocommerce-payment-gateway/rave-woocommerce-payment-gateway.php' ) ) : ?>
+				<a href="<?php echo esc_url( wp_nonce_url( 'plugins.php?action=deactivate&plugin=rave-woocommerce-payment-gateway/rave-woocommerce-payment-gateway.php&plugin_status=inactive', 'deactivate-plugin_rave-woocommerce-payment-gateway/rave-woocommerce-payment-gateway.php' ) ); ?>" class="button button-secondary"><?php esc_html_e( 'Turn off Flutterwave WooCommerce', 'rave-woocommerce-payment-gateway' ); ?></a>
 			<?php endif; ?>
 		</p>
 	<?php endif; ?>

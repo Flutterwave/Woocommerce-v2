@@ -89,8 +89,8 @@ final class Flutterwave {
 		/**
 		 * Filter to adjust the WooCommerce locale to use for translations.
 		 */
-		$locale = apply_filters( 'plugin_locale', $locale, 'woocommerce-rave' ); // phpcs:ignore WooCommerce.Commenting.CommentHooks.MissingSinceComment
-		load_plugin_textdomain( 'woocommerce-rave', false, dirname( FLW_WC_PLUGIN_BASENAME ) . '/i18n/languages' );
+		$locale = apply_filters( 'plugin_locale', $locale, 'rave-woocommerce-payment-gateway' ); // phpcs:ignore WooCommerce.Commenting.CommentHooks.MissingSinceComment
+		load_plugin_textdomain( 'rave-woocommerce-payment-gateway', false, dirname( FLW_WC_PLUGIN_BASENAME ) . '/i18n/languages' );
 	}
 
 	/**

@@ -13,7 +13,7 @@ export const PaymentRequestExpress = ({ payment_details } ) => {
 
 	const fwConfig = {
 		...payment_details,
-		text: __('Pay with Flutterwave!', 'woocommerce-rave'),
+		text: __('Pay with Flutterwave!', 'rave-woocommerce-payment-gateway'),
 		callback: (response) => {
 			console.log(response);
 			closePaymentModal()

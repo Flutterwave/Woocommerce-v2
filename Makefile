@@ -32,7 +32,7 @@ i18n-pot:
 	composer run makepot
 
 zip:
-	rm woocommerce-rave.zip && npm run plugin-zip
+	rm rave-woocommerce-payment-gateway.zip && npm run plugin-zip
 
 inspection:
 	./vendor/bin/phpcs -p . --standard=PHPCompatibilityWP

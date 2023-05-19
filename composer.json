@@ -40,7 +40,7 @@
             "./vendor/bin/phpcs --standard=Woocommerce-Core --extensions=php --ignore=*/vendor/*,*/tests/*,*/data/*,*/assets/*,*/.docker/*,*/build/*.asset.php,*/node_modules/* ."
         ],
         "makepot-audit": [
-            "wp --allow-root i18n make-pot . --exclude=\".github,.wordpress-org,bin,node_modules,tests,docs\" --slug=woocommerce-rave --debug"
+            "wp --allow-root i18n make-pot . --exclude=\".github,.wordpress-org,bin,node_modules,tests,docs\" --slug=rave-woocommerce-payment-gateway --debug"
         ],
         "makepot": [
             "@makepot-audit --skip-audit"
@@ -51,8 +51,8 @@
             "test": "Run unit tests",
             "standards:check": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
             "standards:fix": "Fix coding standards warnings/errors automatically with PHP Code Beautifier",
-            "makepot-audit": "Generate i18n/languages/woocommerce-rave.pot file and run audit",
-            "makepot": "Generate i18n/languages/woocommerce-rave.pot file"
+            "makepot-audit": "Generate i18n/languages/rave-woocommerce-payment-gateway.pot file and run audit",
+            "makepot": "Generate i18n/languages/rave-woocommerce-payment-gateway.pot file"
         }
     }
 }

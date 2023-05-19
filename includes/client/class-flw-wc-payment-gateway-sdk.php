@@ -76,7 +76,7 @@ final class FLW_WC_Payment_Gateway_Sdk {
 	 *
 	 * @var FLW_WC_Payment_Gateway The gateway.
 	 */
-	private FLW_WC_Payment_Gateway $gateway; //phpcs:ignore.
+	private FLW_WC_Payment_Gateway $gateway;
 
 	/**
 	 * FLW_WC_Payment_Gateway_Sdk constructor.
@@ -142,7 +142,6 @@ final class FLW_WC_Payment_Gateway_Sdk {
 			'<html lang="en">',
 			'<body>',
 			'   <img src="' . esc_url( plugins_url( 'sdk/ajax-loader.gif', FLW_WC_PLUGIN_FILE ) ) . '" />',
-			'   <script type="text/javascript" src="' . esc_url( $this->checkout_url ) . '"></script>', // phpcs:ignore.
 			'	<script>',
 			'       var isFlutterwaveCompleted = false;',
 			'       document.addEventListener("DOMContentLoaded", function(event) {',
@@ -252,8 +251,6 @@ final class FLW_WC_Payment_Gateway_Sdk {
 		if ( isset( $this->event_handler ) ) {
 			$this->event_handler->on_webhook( $event_type, $event_data );
 		}
-
-		// phpcs:ignore     $event_type = str_replace( '.', '_', $event_type );
 
 		if ( method_exists( $this, 'requery_transaction' ) ) {
 			$this->requery_transaction( $event_data->tx_ref );

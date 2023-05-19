@@ -43,9 +43,9 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 	 */
 	public function on_init( object $initialization_data ) {
 		// Save the transaction to your DB.
-		$this->order->add_order_note( esc_html__( 'Payment initialized via Flutterwave', 'woocommerce-rave' ) );
+		$this->order->add_order_note( esc_html__( 'Payment initialized via Flutterwave', 'rave-woocommerce-payment-gateway' ) );
 		update_post_meta( $this->order->get_id(), '_flw_payment_txn_ref', $initialization_data->txref );
-		$this->order->add_order_note( esc_html__( 'Your transaction reference: ', 'woocommerce-rave' ) . $initialization_data->txref );
+		$this->order->add_order_note( esc_html__( 'Your transaction reference: ', 'rave-woocommerce-payment-gateway' ) . $initialization_data->txref );
 	}
 
 	/**
@@ -63,8 +63,8 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 				$customer_note  = 'Thank you for your order.<br>';
 				$customer_note .= 'Your payment successfully went through, but we have to put your order <strong>on-hold</strong> ';
 				$customer_note .= 'because the we couldn\t verify your order. Please, contact us for information regarding this order.';
-				$admin_note     = esc_html__( 'Attention: New order has been placed on hold because of incorrect payment amount or currency. Please, look into it.', 'woocommerce-rave' ) . '<br>';
-				$admin_note    .= esc_html__( 'Amount paid: ', 'woocommerce-rave' ) . $transaction_data->currency . ' ' . $transaction_data->amount . ' <br>' . esc_html__( 'Order amount: ', 'woocommerce-rave' ) . $this->order->get_currency() . ' ' . $this->order->get_total() . ' <br>' . esc_html__( ' Reference: ', 'woocommerce-rave' ) . $transaction_data->tx_ref;
+				$admin_note     = esc_html__( 'Attention: New order has been placed on hold because of incorrect payment amount or currency. Please, look into it.', 'rave-woocommerce-payment-gateway' ) . '<br>';
+				$admin_note    .= esc_html__( 'Amount paid: ', 'rave-woocommerce-payment-gateway' ) . $transaction_data->currency . ' ' . $transaction_data->amount . ' <br>' . esc_html__( 'Order amount: ', 'rave-woocommerce-payment-gateway' ) . $this->order->get_currency() . ' ' . $this->order->get_total() . ' <br>' . esc_html__( ' Reference: ', 'rave-woocommerce-payment-gateway' ) . $transaction_data->tx_ref;
 
 				$this->order->add_order_note( $customer_note, 1 );
 				$this->order->add_order_note( $admin_note );
@@ -104,12 +104,12 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 	 */
 	public function on_failure( object $transaction_data ) {
 		$this->order->update_status( 'failed' );
-		$this->order->add_order_note( esc_html__( 'The payment failed on Flutterwave', 'woocommerce-rave' ) );
+		$this->order->add_order_note( esc_html__( 'The payment failed on Flutterwave', 'rave-woocommerce-payment-gateway' ) );
 		$customer_note  = 'Your payment <strong>failed</strong>. ';
 		$customer_note .= 'Please, try again or use another Payment Method on the modal.';
 		$reason         = $transaction_data->processor_response ?? ' - ';
 
-		$this->order->add_order_note( esc_html__( 'Reason for Failure : ', 'woocommerce-rave' ) . $reason );
+		$this->order->add_order_note( esc_html__( 'Reason for Failure : ', 'rave-woocommerce-payment-gateway' ) . $reason );
 
 		wc_add_notice( $customer_note, 'notice' );
 	}
@@ -121,7 +121,7 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 	 * */
 	public function on_requery( string $transaction_reference ) {
 		// Do something, anything!.
-		$this->order->add_order_note( esc_html__( 'Confirming payment on Flutterwave', 'woocommerce-rave' ) );
+		$this->order->add_order_note( esc_html__( 'Confirming payment on Flutterwave', 'rave-woocommerce-payment-gateway' ) );
 	}
 
 	/**
@@ -131,12 +131,12 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 	 * */
 	public function on_requery_error( $requery_response ) {
 		// Do something, anything!.
-		$this->order->add_order_note( esc_html__( 'An error occured while confirming payment on Flutterwave', 'woocommerce-rave' ) );
+		$this->order->add_order_note( esc_html__( 'An error occured while confirming payment on Flutterwave', 'rave-woocommerce-payment-gateway' ) );
 		$this->order->update_status( 'on-hold' );
 		$customer_note  = 'Thank you for your order.<br>';
 		$customer_note .= 'We had an issue confirming your payment, but we have put your order <strong>on-hold</strong>. ';
 		$customer_note .= 'Please, contact us for information regarding this order.';
-		$admin_note     = esc_html__( 'Attention: New order has been placed on hold because we could not confirm the payment. Please, look into it.', 'woocommerce-rave' ) . '<br>';
+		$admin_note     = esc_html__( 'Attention: New order has been placed on hold because we could not confirm the payment. Please, look into it.', 'rave-woocommerce-payment-gateway' ) . '<br>';
 		$admin_note    .= esc_html( 'Payment Responce: ' ) . $requery_response->message;
 
 		$this->order->add_order_note( $customer_note, 1 );
@@ -152,10 +152,10 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 	 * */
 	public function on_cancel( string $transaction_reference ) {
 		// Note: Sometimes a payment can be successful, before a user clicks the cancel button so proceed with caution.
-		$this->order->add_order_note( esc_html__( 'The customer clicked on the cancel button on Checkout.', 'woocommerce-rave' ) );
+		$this->order->add_order_note( esc_html__( 'The customer clicked on the cancel button on Checkout.', 'rave-woocommerce-payment-gateway' ) );
 		$this->order->update_status( 'cancelled' );
-		$admin_note  = esc_html__( 'Attention: Customer clicked on the cancel button on the payment gateway. We have updated the order to cancelled status. ', 'woocommerce-rave' ) . '<br>';
-		$admin_note .= esc_html__( 'Please, confirm from the order notes that there is no note of a successful transaction. If there is, this means that the user was debited and you either have to give value for the transaction or refund the customer.', 'woocommerce-rave' );
+		$admin_note  = esc_html__( 'Attention: Customer clicked on the cancel button on the payment gateway. We have updated the order to cancelled status. ', 'rave-woocommerce-payment-gateway' ) . '<br>';
+		$admin_note .= esc_html__( 'Please, confirm from the order notes that there is no note of a successful transaction. If there is, this means that the user was debited and you either have to give value for the transaction or refund the customer.', 'rave-woocommerce-payment-gateway' );
 		$this->order->add_order_note( $admin_note );
 	}
 
@@ -169,13 +169,13 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 		// Get the transaction from your DB using the transaction reference (txref)
 		// Queue it for requery. Preferably using a queue system. The requery should be about 15 minutes after.
 		// Ask the customer to contact your support and you should escalate this issue to the flutterwave support team. Send this as an email and as a notification on the page. just incase the page timesout or disconnects.
-		$this->order->add_order_note( esc_html__( 'The payment didn\'t return a valid response. It could have timed out or abandoned by the customer on Flutterwave', 'woocommerce-rave' ) );
+		$this->order->add_order_note( esc_html__( 'The payment didn\'t return a valid response. It could have timed out or abandoned by the customer on Flutterwave', 'rave-woocommerce-payment-gateway' ) );
 		$this->order->update_status( 'on-hold' );
 		$customer_note  = 'Thank you for your order.<br>';
 		$customer_note .= 'We had an issue confirming your payment, but we have put your order <strong>on-hold</strong>. ';
 		$customer_note .= esc_html__( 'Please, contact us for information regarding this order.', 'woocomerce-rave' );
-		$admin_note     = esc_html__( 'Attention: New order has been placed on hold because we could not get a definite response from the payment gateway. Kindly contact the Rave support team at hi@flutterwave.com to confirm the payment.', 'woocommerce-rave' ) . ' <br>';
-		$admin_note    .= esc_html__( 'Payment Reference: ', 'woocommerce-rave' ) . $transaction_reference;
+		$admin_note     = esc_html__( 'Attention: New order has been placed on hold because we could not get a definite response from the payment gateway. Kindly contact the Rave support team at hi@flutterwave.com to confirm the payment.', 'rave-woocommerce-payment-gateway' ) . ' <br>';
+		$admin_note    .= esc_html__( 'Payment Reference: ', 'rave-woocommerce-payment-gateway' ) . $transaction_reference;
 
 		$this->order->add_order_note( $customer_note, 1 );
 		$this->order->add_order_note( $admin_note );

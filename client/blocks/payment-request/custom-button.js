@@ -5,7 +5,7 @@ export const CustomButton = ( { onButtonClicked } ) => {
 	const {
 		theme = 'dark',
 		height = '44',
-		customLabel = __( 'Buy now', 'woocommerce-rave' ),
+		customLabel = __( 'Buy now', 'rave-woocommerce-payment-gateway' ),
 	} = getBlocksConfiguration()?.button;
 	return (
 		<button
