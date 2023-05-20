@@ -326,7 +326,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 				'type'        => 'select',
 				'description' => __( 'Optional - Choice of payment method to use. Card, Account etc.', 'rave-woocommerce-payment-gateway' ),
 				'options'     => array(
-					''                    => esc_html_x( 'Default', 'payment_options', 'rave-woocommerce-payment-gateway' ),
+					'card,ussd,account,mpesa,banktransfer,mobilemoneyghana,mobilemoneyfranco,mobilemoneyrwanda, mobilemoneyzambia,mobilemoneyuganda,ussd' => esc_html_x( 'All', 'payment_options', 'rave-woocommerce-payment-gateway' ),
 					'card'                => esc_html_x( 'Card Only', 'payment_options', 'rave-woocommerce-payment-gateway' ),
 					'account'             => esc_html_x( 'Account Only', 'payment_options', 'rave-woocommerce-payment-gateway' ),
 					'ussd'                => esc_html_x( 'USSD Only', 'payment_options', 'rave-woocommerce-payment-gateway' ),
@@ -337,7 +337,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 					'mobilemoneyzambia'   => esc_html_x( 'Zambia MM Only', 'payment_options', 'rave-woocommerce-payment-gateway' ),
 					'mobilemoneytanzania' => esc_html_x( 'Tanzania MM Only', 'payment_options', 'rave-woocommerce-payment-gateway' ),
 				),
-				'default'     => '',
+				'default'     => 'card,ussd,account,mpesa,banktransfer,mobilemoneyghana,mobilemoneyfranco,mobilemoneyrwanda, mobilemoneyzambia,mobilemoneyuganda,ussd',
 			),
 			'go_live'            => array(
 				'title'       => __( 'Mode', 'rave-woocommerce-payment-gateway' ),
@@ -384,9 +384,11 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 		// For inline Checkout.
 		$order = wc_get_order( $order_id );
 
+		$custom_nonce = wp_create_nonce();
+
 		return array(
 			'result'   => 'success',
-			'redirect' => $order->get_checkout_payment_url( true ),
+			'redirect' => $order->get_checkout_payment_url( true ) . "&_wpnonce=$custom_nonce",
 		);
 	}
 
@@ -412,6 +414,8 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 				'redirect' => $order->get_checkout_payment_url( true ),
 			);
 		}
+
+		$flutterwave_request['payment_options'] = $this->payment_options;
 
 		$sdk = $this->sdk->set_event_handler( new FlwEventHandler( $order ) );
 
@@ -476,23 +480,30 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 			return;
 		}
 
-		if ( ! isset( $_REQUEST['woocommerce-pay-nonce'] ) && ! isset( $_REQUEST['_wpnonce'] ) ) {
+		if ( ! isset( $_REQUEST['_wpnonce'] ) ) {
 			return;
 		}
 
-		$nonce_value = wc_get_var(
-			sanitize_text_field( wp_unslash( $_REQUEST['woocommerce-pay-nonce'] ) ), // what to use sanitize_key or sanitize_text_field.
-			wc_get_var( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), '' )
+		$expiry_message = sprintf(
+		/* translators: %s: shop cart url */
+			__( 'Sorry, your session has expired. <a href="%s" class="wc-backward">Return to shop</a>', 'rave-woocommerce-payment-gateway' ),
+			esc_url( wc_get_page_permalink( 'shop' ) )
 		);
 
-		if ( ! wp_verify_nonce( $nonce_value, 'woocommerce-pay' ) ) {
-			return;
-		}
+		$nonce_value = sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) );
 
-		$order_key = urldecode( sanitize_key( wp_unslash( $_GET['key'] ) ) );
+		$order_key = urldecode( sanitize_text_field( wp_unslash( $_GET['key'] ) ) );
 		$order_id  = absint( get_query_var( 'order-pay' ) );
 
 		$order = wc_get_order( $order_id );
+
+		if ( empty( $nonce_value ) || ! wp_verify_nonce( $nonce_value ) ) {
+
+			WC()->session->set( 'refresh_totals', true );
+			wc_add_notice( __( 'We were unable to process your order, please try again.', 'rave-woocommerce-payment-gateway' ) );
+			wp_safe_redirect( $order->get_cancel_order_url() );
+			return;
+		}
 
 		if ( $this->id !== $order->get_payment_method() ) {
 			return;
@@ -530,7 +541,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 				$payment_args['currency']        = $currency;
 				$payment_args['public_key']      = $this->public_key;
 				$payment_args['redirect_url']    = $redirect_url;
-				$payment_args['payment_options'] = 'card,ussd,qr,PayPal';
+				$payment_args['payment_options'] = $this->payment_options;
 				$payment_args['phone_number']    = $order->get_billing_phone();
 				$payment_args['first_name']      = $order->get_billing_first_name();
 				$payment_args['last_name']       = $order->get_billing_last_name();
