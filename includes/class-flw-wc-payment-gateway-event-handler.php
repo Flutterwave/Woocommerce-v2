@@ -55,11 +55,11 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 	 */
 	public function on_successful( object $transaction_data ) {
 		if ( 'successful' === $transaction_data->status ) {
-			$amount = (float) $transaction_data->amount;
-			$decimal = wc_get_price_decimals() ?? 2;
-			$decimal_separator = wc_get_price_decimal_separator() ?? '.';
+			$amount             = (float) $transaction_data->amount;
+			$decimal            = wc_get_price_decimals() ?? 2;
+			$decimal_separator  = wc_get_price_decimal_separator() ?? '.';
 			$thousand_separator = wc_get_price_thousand_separator() ?? '';
-			$amount = number_format( $amount, $decimal, $decimal_separator, $thousand_separator );
+			$amount             = number_format( $amount, $decimal, $decimal_separator, $thousand_separator );
 			if ( $transaction_data->currency !== $this->order->get_currency() || $amount !== $this->order->get_total() ) {
 				$this->order->update_status( 'on-hold' );
 				$customer_note  = 'Thank you for your order.<br>';
