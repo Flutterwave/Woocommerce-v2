@@ -79,7 +79,7 @@ final class FLW_WC_Payment_Gateway_Request {
 	 *
 	 * @return array
 	 */
-	public function get_prepared_payload( \WC_Order $order, string $secret_key, bool $testing ): array {
+	public function get_prepared_payload( \WC_Order $order, string $secret_key, bool $testing = false ): array {
 		$order_id = $order->get_id();
 		$txnref   = 'WOOC_' . $order_id . '_' . time();
 		$amount   = $order->get_total();
