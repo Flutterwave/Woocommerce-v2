@@ -22,6 +22,8 @@ runs:
       env:
         RELEASE_FILENAME: "rave-woocommerce-payment-gateway.zip"
       run: |
+        nvm install
+        nvm use
         npm install
         npm run build
         
