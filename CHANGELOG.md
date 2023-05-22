@@ -26,8 +26,8 @@ Bug fix
 ## 2.2.8 | 20-06-2022
 Bugfixes
 ### Version changes
-- [FIXED] Fix processing function error on Woocommerce Subscription.
 - [CHANGED] Switch to WC-Logger class for logging.
+- [FIXED] Fix processing function error on Woocommerce Subscription.
 
 
 ## 2.2.7 | 30-05-2022
@@ -57,9 +57,8 @@ New payment currencies
 Bugfixes
 ### Version changes
 - [ADDED] Add redirect style with admin toogle for redirect or popup payment style.
-- [FIXED] fix bugs for country.
 - [CHANGED] Add custom gateway name.
-
+- [FIXED] fix bugs for country.
 
 
 ## 1.0.0
