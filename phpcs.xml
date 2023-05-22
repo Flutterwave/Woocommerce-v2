@@ -38,7 +38,7 @@
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" value="woocommerce-rave"/>
+			<property name="text_domain" value="rave-woocommerce-payment-gateway"/>
 		</properties>
 	</rule>
 

@@ -17,8 +17,8 @@ services:
     volumes:
       - ./wordpress:/var/www/html/
       - ./logs/apache2/:/var/log/apache2
-      - ./../:/var/www/html/wp-content/plugins/woocommerce-rave
-      - ./../tests/phpunit:/var/www/html/wp-content/plugins/woocommerce-rave/tests/PHPUnit
+      - ./../:/var/www/html/wp-content/plugins/rave-woocommerce-payment-gateway
+      - ./../tests/phpunit:/var/www/html/wp-content/plugins/rave-woocommerce-payment-gateway/tests/PHPUnit
       - ./php/dev-php.ini:/usr/local/etc/php/conf.d/dev-php.ini
       - ./bin:/var/scripts
     extra_hosts:

@@ -16,7 +16,7 @@ import {
  * Content component
  */
 const Content = () => {
-	return <div>{ decodeEntities( getBlocksConfiguration()?.description || __('You may be redirected to a secure page to complete your payment.', 'woocommerce-rave') ) }</div>;
+	return <div>{ decodeEntities( getBlocksConfiguration()?.description || __('You may be redirected to a secure page to complete your payment.', 'rave-woocommerce-payment-gateway') ) }</div>;
 };
 
 const FLW_ASSETS = getBlocksConfiguration()?.asset_url ?? null;
@@ -29,7 +29,7 @@ const paymentMethod = {
 			<img
 			src={ `${ FLW_ASSETS }/img/flutterwave-full.svg` }
 			alt={ decodeEntities(
-				getBlocksConfiguration()?.title || __( 'Flutterwave', 'woocommerce-rave' )
+				getBlocksConfiguration()?.title || __( 'Flutterwave', 'rave-woocommerce-payment-gateway' )
 			) }
 			/>
 			<b><h4>Flutterwave</h4></b>
@@ -37,11 +37,11 @@ const paymentMethod = {
 	),
 	placeOrderButtonLabel: __(
 		'Proceed to Flutterwave',
-		'woocommerce-rave'
+		'rave-woocommerce-payment-gateway'
 	),
 	ariaLabel: decodeEntities(
 		getBlocksConfiguration()?.title ||
-		__( 'Payment via Flutterwave', 'woocommerce-rave' )
+		__( 'Payment via Flutterwave', 'rave-woocommerce-payment-gateway' )
 	),
 	canMakePayment: () => true,
 	content: <Content />,

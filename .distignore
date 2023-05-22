@@ -36,5 +36,5 @@ playwright.config.js
 .gitpod.yml
 /node_modules
 /vendor
-woocommerce-rave.zip
+rave-woocommerce-payment-gateway.zip
 

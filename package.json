@@ -1,5 +1,5 @@
 {
-	"name": "woocommerce-rave",
+	"name": "rave-woocommerce-payment-gateway",
 	"title": "flutterwave-woocommerce",
 	"version": "2.3.2",
 	"description": "Official WooCommerce payment gateway for Flutterwave",
@@ -8,7 +8,7 @@
 		"prebuild": "npm install && composer install",
 		"build": "npm run uglify && composer run makepot && npm run build:webpack && npm run plugin-zip",
 		"build:webpack": "wp-scripts build",
-		"i18n:merge": "php bin/update-pot-file-references.php i18n/languages/woocommerce-rave.pot",
+		"i18n:merge": "php bin/update-pot-file-references.php i18n/languages/rave-woocommerce-payment-gateway.pot",
 		"start": "npm run start:webpack",
 		"start:webpack": "rimraf build/* && wp-scripts start",
 		"preuglify": "rm -f $npm_package_config_assets_js_min",
@@ -42,7 +42,7 @@
 		"npm": ">=8.15.0"
 	},
 	"config": {
-		"wp_org_slug": "woocommerce-rave",
+		"wp_org_slug": "rave-woocommerce-payment-gateway",
 		"assets": {
 			"js": {
 				"min": "assets/js/*.min.js",
@@ -81,7 +81,7 @@
 		"i18n",
 		"build",
 		"includes",
-		"woocommerce-rave.php",
+		"rave-woocommerce-payment-gateway.php",
 		"README.md",
 		"LICENSE",
 		"CHANGELOG.md",
@@ -94,6 +94,7 @@
 		"@playwright/test": "^1.32.0",
 		"@svgr/cli": "^6.5.1",
 		"@woocommerce/dependency-extraction-webpack-plugin": "^2.2.0",
+		"@woocommerce/eslint-plugin": "^2.2.0",
 		"@wordpress/env": "^5.15.0",
 		"@wordpress/prettier-config": "^2.12.0",
 		"@wordpress/scripts": "^26.0.0",

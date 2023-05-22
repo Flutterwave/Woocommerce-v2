@@ -8,4 +8,4 @@ The generated POT template file is not included in this repository. It gets gene
 make release
 ```
 
-After the build completes, you'll find a `woocommerce-rave.pot` strings file in this directory. 
+After the build completes, you'll find a `rave-woocommerce-payment-gateway.pot` strings file in this directory. 

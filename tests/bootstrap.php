@@ -42,7 +42,7 @@ function _manually_load_plugin() {
 	update_option( 'woocommerce_default_country', 'US:CA' );
 
 	$_plugin_dir = __DIR__ . '/../';
-	require $_plugin_dir . 'woocommerce-rave.php';
+	require $_plugin_dir . 'rave-woocommerce-payment-gateway.php';
 }
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );

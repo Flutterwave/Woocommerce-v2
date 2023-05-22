@@ -3,7 +3,7 @@ vendor/
 docs/.vitepress/dist
 docs/.vitepress/cache
 .idea
-woocommerce-rave.zip
+rave-woocommerce-payment-gateway.zip
 .env
 .env.e2e
 .phpunit.result.cache

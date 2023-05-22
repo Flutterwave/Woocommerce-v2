@@ -79,7 +79,7 @@ final class FLW_WC_Payment_Gateway_Request {
 	 *
 	 * @return array
 	 */
-	public function get_prepared_payload( \WC_Order $order, string $secret_key, bool $testing ): array {
+	public function get_prepared_payload( \WC_Order $order, string $secret_key, bool $testing = false ): array {
 		$order_id = $order->get_id();
 		$txnref   = 'WOOC_' . $order_id . '_' . time();
 		$amount   = $order->get_total();
@@ -123,9 +123,7 @@ final class FLW_WC_Payment_Gateway_Request {
 			),
 			'customizations'  => array(
 				'title'       => get_bloginfo( 'name' ),
-				'description' => sprintf( __( 'Payment for order %s', 'woocommerce-rave' ), $order->get_order_number() ), // phpcs:ignore
-				// phpcs:ignore
-//				'logo' => $this->gateway->get_option('logo'),
+				'description' => __( 'Payment for order ', 'rave-woocommerce-payment-gateway' ) . $order->get_order_number(),
 			),
 		);
 	}

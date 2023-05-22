@@ -100,7 +100,7 @@ final class Flutterwave_WC_Gateway_Blocks_Support extends AbstractPaymentMethodT
 		);
 		wp_set_script_translations(
 			'wc-flutterwave-blocks',
-			'woocommerce-rave'
+			'rave-woocommerce-payment-gateway'
 		);
 
 		return array(
@@ -134,30 +134,30 @@ final class Flutterwave_WC_Gateway_Blocks_Support extends AbstractPaymentMethodT
 		$icons_src = array(
 			'visa'       => array(
 				'src' => dirname( FLW_WC_PLUGIN_FILE ) . '/assets/img/visa.svg',
-				'alt' => __( 'Visa', 'woocommerce-rave' ),
+				'alt' => __( 'Visa', 'rave-woocommerce-payment-gateway' ),
 			),
 			'amex'       => array(
 				'src' => dirname( FLW_WC_PLUGIN_FILE ) . '/assets/img/amex.svg',
-				'alt' => __( 'American Express', 'woocommerce-rave' ),
+				'alt' => __( 'American Express', 'rave-woocommerce-payment-gateway' ),
 			),
 			'mastercard' => array(
 				'src' => dirname( FLW_WC_PLUGIN_FILE ) . '/assets/img/mastercard.svg',
-				'alt' => __( 'Mastercard', 'woocommerce-rave' ),
+				'alt' => __( 'Mastercard', 'rave-woocommerce-payment-gateway' ),
 			),
 		);
 
 		if ( 'USD' === get_woocommerce_currency() ) {
 			$icons_src['discover'] = array(
 				'src' => dirname( FLW_WC_PLUGIN_FILE ) . '/assets/img/discover.svg',
-				'alt' => _x( 'Discover', 'Name of credit card', 'woocommerce-rave' ),
+				'alt' => _x( 'Discover', 'Name of credit card', 'rave-woocommerce-payment-gateway' ),
 			);
 			$icons_src['jcb']      = array(
 				'src' => dirname( FLW_WC_PLUGIN_FILE ) . '/assets/img/jcb.svg',
-				'alt' => __( 'JCB', 'woocommerce-rave' ),
+				'alt' => __( 'JCB', 'rave-woocommerce-payment-gateway' ),
 			);
 			$icons_src['diners']   = array(
 				'src' => dirname( FLW_WC_PLUGIN_FILE ) . '/assets/img/diners.svg',
-				'alt' => __( 'Diners', 'woocommerce-rave' ),
+				'alt' => __( 'Diners', 'rave-woocommerce-payment-gateway' ),
 			);
 		}
 		return $icons_src;
