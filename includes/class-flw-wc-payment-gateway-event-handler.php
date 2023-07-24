@@ -36,24 +36,23 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 		$this->order = $order;
 	}
 
-    /**
-     * amounts_equal()
-     *
-     * Checks to see whether the given amounts are equal using a proper floating
-     * point comparison with an Epsilon which ensures that insignificant decimal
-     * places are ignored in the comparison.
-     *
-     * eg. 100.00 is equal to 100.0001
-     *
-     * @param $amount1 Float 1st amount for comparison
-     * @param $amount2 Float 2nd amount for comparison
-     * @since 2.3.3
-     * @return bool
-     */
-    public function amounts_equal( $amount1, $amount2 ): bool
-    {
-        return ! ( abs( floatval( $amount1 ) - floatval( $amount2 ) ) > FLW_WC_EPSILON );
-    }
+	/**
+	 * Check Amount Equals.
+	 *
+	 * Checks to see whether the given amounts are equal using a proper floating
+	 * point comparison with an Epsilon which ensures that insignificant decimal
+	 * places are ignored in the comparison.
+	 *
+	 * eg. 100.00 is equal to 100.0001
+	 *
+	 * @param Float $amount1 1st amount for comparison.
+	 * @param Float $amount2  2nd amount for comparison.
+	 * @since 2.3.3
+	 * @return bool
+	 */
+	public function amounts_equal( $amount1, $amount2 ): bool {
+		return ! ( abs( floatval( $amount1 ) - floatval( $amount2 ) ) > FLW_WC_EPSILON );
+	}
 
 	/**
 	 * This is called when the Flutterwave class is initialized
@@ -74,9 +73,9 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 	 */
 	public function on_successful( object $transaction_data ) {
 		if ( 'successful' === $transaction_data->status ) {
-			$amount             = (float) $transaction_data->amount;
+			$amount = (float) $transaction_data->amount;
 
-			if ( $transaction_data->currency !== $this->order->get_currency() || !$this->amounts_equal($amount, $this->order->get_total() ) ) {
+			if ( $transaction_data->currency !== $this->order->get_currency() || ! $this->amounts_equal( $amount, $this->order->get_total() ) ) {
 				$this->order->update_status( 'on-hold' );
 				$customer_note  = 'Thank you for your order.<br>';
 				$customer_note .= 'Your payment successfully went through, but we have to put your order <strong>on-hold</strong> ';
