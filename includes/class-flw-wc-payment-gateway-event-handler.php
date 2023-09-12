@@ -37,6 +37,24 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 	}
 
 	/**
+	 * Check Amount Equals.
+	 *
+	 * Checks to see whether the given amounts are equal using a proper floating
+	 * point comparison with an Epsilon which ensures that insignificant decimal
+	 * places are ignored in the comparison.
+	 *
+	 * eg. 100.00 is equal to 100.0001
+	 *
+	 * @param Float $amount1 1st amount for comparison.
+	 * @param Float $amount2  2nd amount for comparison.
+	 * @since 2.3.3
+	 * @return bool
+	 */
+	public function amounts_equal( $amount1, $amount2 ): bool {
+		return ! ( abs( floatval( $amount1 ) - floatval( $amount2 ) ) > FLW_WC_EPSILON );
+	}
+
+	/**
 	 * This is called when the Flutterwave class is initialized
 	 *
 	 * @param object $initialization_data - This is the transaction data as returned from the Flutterwave payment gateway.
@@ -55,18 +73,15 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 	 */
 	public function on_successful( object $transaction_data ) {
 		if ( 'successful' === $transaction_data->status ) {
-			$amount             = (float) $transaction_data->amount;
-			$decimal            = wc_get_price_decimals() ?? 2;
-			$decimal_separator  = wc_get_price_decimal_separator() ?? '.';
-			$thousand_separator = wc_get_price_thousand_separator() ?? '';
-			$amount             = number_format( $amount, $decimal, $decimal_separator, $thousand_separator );
-			if ( $transaction_data->currency !== $this->order->get_currency() || $amount !== $this->order->get_total() ) {
+			$amount = (float) $transaction_data->amount;
+
+			if ( $transaction_data->currency !== $this->order->get_currency() || ! $this->amounts_equal( $amount, $this->order->get_total() ) ) {
 				$this->order->update_status( 'on-hold' );
 				$customer_note  = 'Thank you for your order.<br>';
 				$customer_note .= 'Your payment successfully went through, but we have to put your order <strong>on-hold</strong> ';
 				$customer_note .= 'because the we couldn\t verify your order. Please, contact us for information regarding this order.';
 				$admin_note     = esc_html__( 'Attention: New order has been placed on hold because of incorrect payment amount or currency. Please, look into it.', 'rave-woocommerce-payment-gateway' ) . '<br>';
-				$admin_note    .= esc_html__( 'Amount paid: ', 'rave-woocommerce-payment-gateway' ) . $transaction_data->currency . ' ' . $transaction_data->amount . ' <br>' . esc_html__( 'Order amount: ', 'rave-woocommerce-payment-gateway' ) . $this->order->get_currency() . ' ' . $this->order->get_total() . ' <br>' . esc_html__( ' Reference: ', 'rave-woocommerce-payment-gateway' ) . $transaction_data->tx_ref;
+				$admin_note    .= esc_html__( 'Amount paid: ', 'rave-woocommerce-payment-gateway' ) . $transaction_data->currency . ' ' . $amount . ' <br>' . esc_html__( 'Order amount: ', 'rave-woocommerce-payment-gateway' ) . $this->order->get_currency() . ' ' . $this->order->get_total() . ' <br>' . esc_html__( ' Reference: ', 'rave-woocommerce-payment-gateway' ) . $transaction_data->tx_ref;
 
 				$this->order->add_order_note( $customer_note, 1 );
 				$this->order->add_order_note( $admin_note );

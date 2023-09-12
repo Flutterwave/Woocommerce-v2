@@ -18,7 +18,7 @@ final class Flutterwave {
 	 *
 	 * @var string
 	 */
-	public string $version = '2.3.2';
+	public string $version = '2.3.3';
 
 	/**
 	 * Plugin API version.
@@ -76,6 +76,7 @@ final class Flutterwave {
 		$this->define( 'FLW_WC_VERSION', $this->version );
 		$this->define( 'FLW_WC_MIN_WC_VER', '7.1' );
 		$this->define( 'FLW_WC_URL', trailingslashit( plugins_url( '/', FLW_WC_PLUGIN_FILE ) ) );
+		$this->define( 'FLW_WC_EPSILON', 0.01 );
 	}
 
 	/**
