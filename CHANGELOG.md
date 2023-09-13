@@ -1,4 +1,8 @@
 # Changelog
+## 2.3.3 | 24-07-2023
+Update Order Notes and Confirmation Alerts.
+### Version Changes
+- [FIXED] Order Note Details and Confirmation Alerts.
 
 ## 2.3.2 | 25-04-2023
 Wordpress requirement changes and updates.
