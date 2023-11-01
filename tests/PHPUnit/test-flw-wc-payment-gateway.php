@@ -68,7 +68,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 	 *
 	 * @dataProvider webhook_provider
 	 */
-	public function test_webhook_is_accessible( string $hash, array $data ) {
+	public function test_webhook_is_accessible( string $hash, array $data, array $wbk_response ) {
 		$webhook_url = WC()->api_request_url( 'Flw_WC_Payment_Webhook' );
 
 		//make a request to the webhook url.
@@ -82,9 +82,20 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 			'body'        => wp_json_encode( $data )
 		) );
 
-		$response_body = wp_remote_retrieve_body( $response );
+		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 
-		$this->assertEquals( '200', wp_remote_retrieve_response_code( $response ) );
+		// when testing webhook accessibility.
+		// when request body is has a successful payment event.
+		// when request body is has a failed payment event.
+		if( isset( $data['data']['status'] ) && 'successful' === $data['data']['status'] ) {
+			$this->assertEquals( '200', wp_remote_retrieve_response_code( $response ) );
+		}
+		
+		// when request body is empty.
+		if( empty( $data ) ) {
+			$this->assertEquals( '204', wp_remote_retrieve_response_code( $response ) );
+		}
+		$this->assertEquals( $wbk_response, $response_body );
 	}
 
 	/**
@@ -96,13 +107,42 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 		return [
 			[
 				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
-			array(
-				'amount' => 2000,
-				'currency' => 'NGN',
-				'status' => 'successful',
-				'event' => 'test_assess'
-			)
-			]
+				array(
+					'amount' => 2000,
+					'currency' => 'NGN',
+					'status' => 'successful',
+					'event' => 'test_access'
+				),
+				array(
+					'status'  => 'success',
+					'message' => 'Webhook Test Successful. handler is accessible',
+				)
+			],
+			[
+				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				$wbk_request['success'],
+				array(
+					'status'  => 'success',
+					'message' => 'Order Processed Successfully',
+				)
+			],
+			[
+				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				$wbk_request['failed'],
+				array(
+					'status'  => 'success',
+					'message' => 'Order Updated Successfully',
+				)
+			],
+			[
+				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				$wbk_request['empty'],
+				array(
+					'status'  => 'success',
+					'message' => 'Webhook sent is deformed. missing data object.',
+				)
+			],
+
 		];
 	}
 
