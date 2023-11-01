@@ -105,7 +105,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 	 */
 	public function webhook_provider(): array {
 		$wbk_request = array(
-			'sucess' => json_decode(
+			'success' => json_decode(
 				'{
 					"event": "charge.completed",
 					"data": {
