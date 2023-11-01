@@ -120,18 +120,18 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 			],
 			[
 				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
-				$wbk_request['success'],
-				array(
-					'status'  => 'success',
-					'message' => 'Order Processed Successfully',
-				)
-			],
-			[
-				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
 				$wbk_request['failed'],
 				array(
 					'status'  => 'success',
 					'message' => 'Order Updated Successfully',
+				)
+			],
+			[
+				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				$wbk_request['success'],
+				array(
+					'status'  => 'success',
+					'message' => 'Order Processed Successfully',
 				)
 			],
 			[
