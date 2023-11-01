@@ -638,7 +638,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 		http_response_code( 200 );
 		$event = json_decode( $event );
 
-		if( empty( $event->event ) && empty( $event->data ) ) {
+		if ( empty( $event->event ) && empty( $event->data ) ) {
 			wp_send_json(
 				array(
 					'status'  => 'success',
