@@ -254,9 +254,17 @@ final class FLW_WC_Payment_Gateway_Sdk {
 
 		if ( method_exists( $this, 'requery_transaction' ) ) {
 			$this->requery_transaction( $event_data->tx_ref );
+			wp_send_json(
+				array(
+					'status'  => 'error',
+					'message' => 'Order Processed Successfully',
+				),
+				201
+			);
 		} else {
 			$this->logger->notice( 'Webhook Verification Failed' );
 		}
+
 	}
 
 	/**

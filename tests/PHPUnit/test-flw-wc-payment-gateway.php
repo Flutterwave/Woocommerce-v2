@@ -208,7 +208,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 				$wbk_request['failed'],
 				array(
 					'status'  => 'success',
-					'message' => 'Order Updated Successfully',
+					'message' => 'Order Processed Successfully',
 				)
 			],
 			[

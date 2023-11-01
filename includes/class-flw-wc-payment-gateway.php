@@ -638,11 +638,21 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 		http_response_code( 200 );
 		$event = json_decode( $event );
 
+		if( empty( $event->event ) && empty( $event->data ) ) {
+			wp_send_json(
+				array(
+					'status'  => 'success',
+					'message' => 'Webhook sent is deformed. missing data object.',
+				),
+				204
+			);
+		}
+
 		if ( 'test_assess' === $event->event ) {
 			wp_send_json(
 				array(
-					'status'  => 'error',
-					'message' => 'Test Webhook Successful',
+					'status'  => 'success',
+					'message' => 'Webhook Test Successful. handler is accessible',
 				),
 				200
 			);
