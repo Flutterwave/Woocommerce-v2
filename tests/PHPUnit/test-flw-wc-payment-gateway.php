@@ -94,7 +94,10 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 			'body'        => wp_json_encode( $data )
 		) );
 
+		$this->assertNotWPError( $response );
 		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
+
+		print_r($response_body);
 
 		// when testing webhook accessibility.
 		// when request body is has a successful payment event.
@@ -108,7 +111,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 			$this->assertEquals( WP_Http::NO_CONTENT, wp_remote_retrieve_response_code( $response ) );
 		}
 
-		$this->assertNotWPError( $res );
+		
 		$this->assertEquals( $wbk_response, $response_body );
 	}
 
@@ -237,7 +240,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
 				$wbk_request['empty'],
 				array(
-					'status'  => 'success',
+					'status'  => 'error',
 					'message' => 'Webhook sent is deformed. missing data object.',
 				)
 			],
