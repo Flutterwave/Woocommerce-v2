@@ -3,14 +3,14 @@
  * Plugin Name: Flutterwave WooCommerce
  * Plugin URI: https://developer.flutterwave.com/
  * Description: Official WooCommerce payment gateway for Flutterwave.
- * Version: 2.3.3
+ * Version: 2.3.4
  * Author: Flutterwave Developers
  * Author URI: http://flutterwave.com/us
  * License: MIT License
  * Text Domain: rave-woocommerce-payment-gateway
  * Domain Path: i18n/languages
  * WC requires at least:   7.1
- * WC tested up to:        7.6.0
+ * WC tested up to:        8.2.1
  * Requires at least:      5.6
  * Requires PHP:           7.4
  *

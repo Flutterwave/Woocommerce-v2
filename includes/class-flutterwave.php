@@ -18,7 +18,7 @@ final class Flutterwave {
 	 *
 	 * @var string
 	 */
-	public string $version = '2.3.3';
+	public string $version = '2.3.4';
 
 	/**
 	 * Plugin API version.

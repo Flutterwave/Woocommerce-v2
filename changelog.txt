@@ -1,4 +1,6 @@
 == Changelog ==
+= 2.3.4 = 
+* Fix: Webhook Handler Acknowledgement.
 = 2.3.2 =
 * Added: Support for WooCommerce Blocks.
 * Updated: WooCommerce Checkout Process.
