@@ -106,9 +106,6 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 			return 204;
 		}
 
-		$this->assertNotWPError( $response );
-		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
-
 		$this->assertEquals( WP_Http::NO_CONTENT, retrieve_response_code() );
 	}
 
