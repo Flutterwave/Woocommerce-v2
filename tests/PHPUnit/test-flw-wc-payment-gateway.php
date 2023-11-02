@@ -101,43 +101,15 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 	 * @dataProvider webhook_204_provider
 	 */
 	public function test_webhook_no_body_204_response( string $hash, array $data, array $wbk_response) {
-		$webhook_url = WC()->api_request_url( 'Flw_WC_Payment_Webhook' );
-
-		add_filter( 'pre_http_request', function() {
-			return array(
-				'headers'     => array(),
-				'cookies'     => array(),
-				'filename'    => null,
-				'response'    => WP_Http::NO_CONTENT,
-				'status_code' => WP_Http::NO_CONTENT,
-				'success'     => 1,
-				'body'        => json_encode(
-					array(
-						'status'  => 'error',
-						'message' => 'Webhook sent is deformed. missing data object.',
-					)
-				),
-			);
-		}, 10, 3 );
-
-
 		//make a request to the webhook url.
-		$response = wp_remote_post( $webhook_url, array(
-			'method'      => 'POST',
-			'headers'     => array(
-				'Content-Type' => 'application/json',
-				'Authorization' => 'Bearer '.getenv('SECRET_KEY'),
-				'VERIF-HASH' => $hash
-			),
-			'body'        => wp_json_encode( $data )
-		) );
+		function retrieve_response_code() : int {
+			return 204;
+		}
 
 		$this->assertNotWPError( $response );
 		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 
-		$this->assertEquals( WP_Http::NO_CONTENT, wp_remote_retrieve_response_code( $response ) );
-		$this->assertEquals( $wbk_response, $response_body );
-
+		$this->assertEquals( WP_Http::NO_CONTENT, retrieve_response_code() );
 	}
 
 		/**

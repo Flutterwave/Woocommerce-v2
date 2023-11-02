@@ -696,6 +696,13 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 			}
 
 			$sdk->set_event_handler( new FlwEventHandler( $order ) )->webhook_verify( $event_type, $event_data );
+			wp_send_json(
+				array(
+					'status'  => 'success',
+					'message' => 'Order Processed Successfully',
+				),
+				WP_Http::CREATED
+			);
 		}
 
 		wp_safe_redirect( home_url() );
