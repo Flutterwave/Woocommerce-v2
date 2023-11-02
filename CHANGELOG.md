@@ -1,4 +1,9 @@
 # Changelog
+## 2.3.4 | 01-11-2023
+Handle Webhook Acknowledgement.
+### Version Changes
+- [FIXED] Aknowledge hooks sent to prevent unsuccessful webhook delivery.
+
 ## 2.3.3 | 24-07-2023
 Update Order Notes and Confirmation Alerts.
 ### Version Changes

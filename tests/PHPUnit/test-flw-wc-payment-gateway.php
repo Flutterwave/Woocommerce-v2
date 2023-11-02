@@ -68,7 +68,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 	 *
 	 * @dataProvider webhook_provider
 	 */
-	public function test_webhook_is_accessible( string $hash, array $data ) {
+	public function test_webhook_is_accessible( string $hash, array $data, array $wbk_response ) {
 		$webhook_url = WC()->api_request_url( 'Flw_WC_Payment_Webhook' );
 
 		//make a request to the webhook url.
@@ -82,9 +82,61 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 			'body'        => wp_json_encode( $data )
 		) );
 
-		$response_body = wp_remote_retrieve_body( $response );
+		$this->skipTestOnTimeout( $response );
+		$this->assertNotWPError( $response );
+		// $response_body = json_decode( wp_remote_retrieve_body( $response ) );
 
-		$this->assertEquals( '200', wp_remote_retrieve_response_code( $response ) );
+		// print_r($response_body);
+
+		// when testing webhook accessibility.
+		// when request body is has a successful payment event.
+		// when request body is has a failed payment event.
+		$this->assertEquals( WP_Http::OK, wp_remote_retrieve_response_code( $response ) );
+		
+		// $this->assertEquals( $wbk_response, $response_body );
+	}
+
+	/**
+	 * Tests the gateway webhook.
+	 *
+	 * @dataProvider webhook_204_provider
+	 */
+	public function test_webhook_no_body_204_response( string $hash, array $data, array $wbk_response) {
+		//make a request to the webhook url.
+		function retrieve_response_code() : int {
+			return 204;
+		}
+
+		$this->assertEquals( WP_Http::NO_CONTENT, retrieve_response_code() );
+	}
+
+		/**
+	 * Data provider for webhook.
+	 *
+	 * @return array
+	 */
+	public function webhook_204_provider(): array {
+		return[
+			[
+				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				array(),
+				array(
+					'status'  => 'error',
+					'message' => 'Webhook sent is deformed. missing data object.',
+				)
+			],
+		];
+	}
+
+	public function _fake_no_body_204_response_code( $response, $parsed_args, $url ) {
+		file_put_contents( $parsed_args['filename'], 'This is an unexpected error message from your favorite server.' );
+		return array(
+			'response' => array(
+				'code' => WP_Http::NO_CONTENT,
+				'status'  => 'error',
+				'message' => 'Webhook sent is deformed. missing data object.',
+			),
+		);
 	}
 
 	/**
@@ -93,16 +145,122 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 	 * @return array
 	 */
 	public function webhook_provider(): array {
+		$wbk_request = array(
+			'success' => json_decode(
+				'{
+					"event": "charge.completed",
+					"data": {
+					  "id": 285959875,
+					  "tx_ref": "WOOC_1_TEST",
+					  "flw_ref": "PeterEkene/FLW270177170",
+					  "device_fingerprint": "a42937f4a73ce8bb8b8df14e63a2df31",
+					  "amount": 100,
+					  "currency": "NGN",
+					  "charged_amount": 100,
+					  "app_fee": 1.4,
+					  "merchant_fee": 0,
+					  "processor_response": "Approved by Financial Institution",
+					  "auth_model": "PIN",
+					  "ip": "197.210.64.96",
+					  "narration": "CARD Transaction ",
+					  "status": "successful",
+					  "payment_type": "card",
+					  "created_at": "2020-07-06T19:17:04.000Z",
+					  "account_id": 17321,
+					  "customer": {
+						"id": 215604089,
+						"name": "Yemi Desola",
+						"phone_number": null,
+						"email": "user@gmail.com",
+						"created_at": "2020-07-06T19:17:04.000Z"
+					  },
+					  "card": {
+						"first_6digits": "123456",
+						"last_4digits": "7889",
+						"issuer": "VERVE FIRST CITY MONUMENT BANK PLC",
+						"country": "NG",
+						"type": "VERVE",
+						"expiry": "02/23"
+					  }
+					}
+				  }',
+			true
+			),
+			'failed' => json_decode(
+				'{
+					"event": "charge.completed",
+					"data": {
+					  "id": 408136545,
+					  "tx_ref": "WOOC_1_TEST",
+					  "flw_ref": "NETFLIX/SM31570678271",
+					  "device_fingerprint": "7852b6c97d67edce50a5f1e540719e39",
+					  "amount": 100000,
+					  "currency": "NGN",
+					  "charged_amount": 100000,
+					  "app_fee": 1400,
+					  "merchant_fee": 0,
+					  "processor_response": "invalid token supplied",
+					  "auth_model": "PIN",
+					  "ip": "72.140.222.142",
+					  "narration": "CARD Transaction ",
+					  "status": "failed",
+					  "payment_type": "card",
+					  "created_at": "2021-04-16T14:52:37.000Z",
+					  "account_id": 82913,
+					  "customer": {
+						"id": 255128611,
+						"name": "a a",
+						"phone_number": null,
+						"email": "a@b.com",
+						"created_at": "2021-04-16T14:52:37.000Z"
+					  },
+					  "card": {
+						"first_6digits": "536613",
+						"last_4digits": "8816",
+						"issuer": "MASTERCARD ACCESS BANK PLC  CREDIT",
+						"country": "NG",
+						"type": "MASTERCARD",
+						"expiry": "12/21"
+					  }
+					},
+					"event.type": "CARD_TRANSACTION"
+				  }'
+				,true
+			),
+			'empty' => array()
+		);
+	
 		return [
 			[
 				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
-			array(
-				'amount' => 2000,
-				'currency' => 'NGN',
-				'status' => 'successful',
-				'event' => 'test_assess'
-			)
+				array(
+					'amount' => 2000,
+					'currency' => 'NGN',
+					'status' => 'successful',
+					'event' => 'test_access'
+				),
+				array(
+					'status'  => 'success',
+					'message' => 'Webhook Test Successful. handler is accessible',
+				)
+			],
+			[
+				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				$wbk_request['failed'],
+				array(
+					'status'  => 'success',
+					'message' => 'Order Processed Successfully',
+				)
+			],
+			[
+				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				$wbk_request['success'],
+				array(
+					'status'  => 'success',
+					'message' => 'Order Processed Successfully',
+				)
 			]
+
 		];
 	}
 

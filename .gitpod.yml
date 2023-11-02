@@ -1,6 +1,6 @@
 
-tasks:
-  - init: make zip
+tasks: open ./tests/PHPUnit/README.md
+  - init: make up
 
 
 

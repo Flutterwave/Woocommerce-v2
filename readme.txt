@@ -2,8 +2,8 @@
 Contributors: theflutterwave
 Tags: fintech,flutterwave, woocommerce, payments, nigeria, mastercard, visa, target,Naira,payments,verve,donation,church,shop,store, ghana, kenya, international, mastercard, visa
 Requires at least: 3.1
-Tested up to: 6.2.1
-Stable tag: 2.3.3
+Tested up to: 6.3.2
+Stable tag: 2.3.4
 License: MIT
 License URI: https://github.com/Flutterwave/Woocommerce/blob/master/LICENSE
 
@@ -96,6 +96,8 @@ By contributing to the Flutterwave WooCommerce, you agree that your contribution
 1. You need to open an account on [Flutterwave for Business](https://dashboard.flutterwave.com)
 
 == Changelog ==
+= 2.3.4 = 
+* Fix: Webhook Handler Acknowledgement.
 = 2.3.2 =
 * Added: Support for WooCommerce Blocks.
 * Updated: WooCommerce Checkout Process.

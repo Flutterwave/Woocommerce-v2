@@ -631,20 +631,30 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 					'status'  => 'error',
 					'message' => 'Access Denied Hash does not match',
 				),
-				400
+				WP_Http::UNAUTHORIZED
 			);
 		}
 
 		http_response_code( 200 );
 		$event = json_decode( $event );
 
-		if ( 'test_assess' === $event->event ) {
+		if ( empty( $event->event ) && empty( $event->data ) ) {
 			wp_send_json(
 				array(
 					'status'  => 'error',
-					'message' => 'Test Webhook Successful',
+					'message' => 'Webhook sent is deformed. missing data object.',
 				),
-				200
+				WP_Http::NO_CONTENT
+			);
+		}
+
+		if ( 'test_assess' === $event->event ) {
+			wp_send_json(
+				array(
+					'status'  => 'success',
+					'message' => 'Webhook Test Successful. handler is accessible',
+				),
+				WP_Http::OK
 			);
 		}
 
@@ -681,11 +691,18 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 						'status'  => 'error',
 						'message' => 'Order already processed',
 					),
-					201
+					WP_Http::CREATED
 				);
 			}
 
 			$sdk->set_event_handler( new FlwEventHandler( $order ) )->webhook_verify( $event_type, $event_data );
+			wp_send_json(
+				array(
+					'status'  => 'success',
+					'message' => 'Order Processed Successfully',
+				),
+				WP_Http::CREATED
+			);
 		}
 
 		wp_safe_redirect( home_url() );
