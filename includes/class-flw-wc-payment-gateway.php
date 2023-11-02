@@ -631,7 +631,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 					'status'  => 'error',
 					'message' => 'Access Denied Hash does not match',
 				),
-				400
+				WP_Http::BAD_REQUEST
 			);
 		}
 
@@ -644,7 +644,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 					'status'  => 'success',
 					'message' => 'Webhook sent is deformed. missing data object.',
 				),
-				204
+				WP_Http::NO_CONTENT
 			);
 		}
 
@@ -654,7 +654,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 					'status'  => 'success',
 					'message' => 'Webhook Test Successful. handler is accessible',
 				),
-				200
+				WP_Http::OK
 			);
 		}
 
@@ -691,7 +691,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 						'status'  => 'error',
 						'message' => 'Order already processed',
 					),
-					201
+					WP_Http::CREATED
 				);
 			}
 

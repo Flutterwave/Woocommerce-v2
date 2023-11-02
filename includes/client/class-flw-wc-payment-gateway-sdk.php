@@ -13,6 +13,7 @@ namespace Flutterwave\WooCommerce\Client;
 
 use Flutterwave\WooCommerce\Contracts\FLW_WC_Payment_Gateway_Event_Handler_Interface;
 use FLW_WC_Payment_Gateway;
+use WP_Http;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -256,10 +257,10 @@ final class FLW_WC_Payment_Gateway_Sdk {
 			$this->requery_transaction( $event_data->tx_ref );
 			wp_send_json(
 				array(
-					'status'  => 'error',
+					'status'  => 'success',
 					'message' => 'Order Processed Successfully',
 				),
-				201
+				WP_Http::CREATED
 			);
 		} else {
 			$this->logger->notice( 'Webhook Verification Failed' );
