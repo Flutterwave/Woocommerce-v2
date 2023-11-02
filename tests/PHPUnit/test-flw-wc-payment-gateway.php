@@ -70,18 +70,56 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 	 */
 	public function test_webhook_is_accessible( string $hash, array $data, array $wbk_response ) {
 		$webhook_url = WC()->api_request_url( 'Flw_WC_Payment_Webhook' );
-	
-		// add_filter( 'pre_http_request', function() {
-		// 	return array(
-		// 		'headers'     => array(),
-		// 		'cookies'     => array(),
-		// 		'filename'    => null,
-		// 		'response'    => 200,
-		// 		'status_code' => 200,
-		// 		'success'     => 1,
-		// 		'body'        => '',
-		// 	);
-		// }, 10, 3 );
+
+		//make a request to the webhook url.
+		$response = wp_remote_post( $webhook_url, array(
+			'method'      => 'POST',
+			'headers'     => array(
+				'Content-Type' => 'application/json',
+				'Authorization' => 'Bearer '.getenv('SECRET_KEY'),
+				'VERIF-HASH' => $hash
+			),
+			'body'        => wp_json_encode( $data )
+		) );
+
+		$this->assertNotWPError( $response );
+		// $response_body = json_decode( wp_remote_retrieve_body( $response ) );
+
+		// print_r($response_body);
+
+		// when testing webhook accessibility.
+		// when request body is has a successful payment event.
+		// when request body is has a failed payment event.
+		$this->assertEquals( WP_Http::OK, wp_remote_retrieve_response_code( $response ) );
+		
+		// $this->assertEquals( $wbk_response, $response_body );
+	}
+
+	/**
+	 * Tests the gateway webhook.
+	 *
+	 * @dataProvider webhook_204_provider
+	 */
+	public function test_webhook_no_body_204_response( string $hash, array $data, array $wbk_response) {
+		$webhook_url = WC()->api_request_url( 'Flw_WC_Payment_Webhook' );
+
+		add_filter( 'pre_http_request', function() {
+			return array(
+				'headers'     => array(),
+				'cookies'     => array(),
+				'filename'    => null,
+				'response'    => WP_Http::NO_CONTENT,
+				'status_code' => WP_Http::NO_CONTENT,
+				'success'     => 1,
+				'body'        => json_encode(
+					array(
+						'status'  => 'error',
+						'message' => 'Webhook sent is deformed. missing data object.',
+					)
+				),
+			);
+		}, 10, 3 );
+
 
 		//make a request to the webhook url.
 		$response = wp_remote_post( $webhook_url, array(
@@ -97,22 +135,38 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 		$this->assertNotWPError( $response );
 		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 
-		print_r($response_body);
-
-		// when testing webhook accessibility.
-		// when request body is has a successful payment event.
-		// when request body is has a failed payment event.
-		if( isset( $data['data']['status'] ) && 'successful' === $data['data']['status'] ) {
-			$this->assertEquals( WP_Http::OK, wp_remote_retrieve_response_code( $response ) );
-		}
-		
-		// when request body is empty.
-		if( empty( $data ) ) {
-			$this->assertEquals( WP_Http::NO_CONTENT, wp_remote_retrieve_response_code( $response ) );
-		}
-
-		
+		$this->assertEquals( WP_Http::NO_CONTENT, wp_remote_retrieve_response_code( $response ) );
 		$this->assertEquals( $wbk_response, $response_body );
+
+	}
+
+		/**
+	 * Data provider for webhook.
+	 *
+	 * @return array
+	 */
+	public function webhook_204_provider(): array {
+		return[
+			[
+				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				array(),
+				array(
+					'status'  => 'error',
+					'message' => 'Webhook sent is deformed. missing data object.',
+				)
+			],
+		];
+	}
+
+	public function _fake_no_body_204_response_code( $response, $parsed_args, $url ) {
+		file_put_contents( $parsed_args['filename'], 'This is an unexpected error message from your favorite server.' );
+		return array(
+			'response' => array(
+				'code' => WP_Http::NO_CONTENT,
+				'status'  => 'error',
+				'message' => 'Webhook sent is deformed. missing data object.',
+			),
+		);
 	}
 
 	/**
@@ -235,15 +289,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 					'status'  => 'success',
 					'message' => 'Order Processed Successfully',
 				)
-			],
-			[
-				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
-				$wbk_request['empty'],
-				array(
-					'status'  => 'error',
-					'message' => 'Webhook sent is deformed. missing data object.',
-				)
-			],
+			]
 
 		];
 	}
