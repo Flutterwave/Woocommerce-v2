@@ -1,7 +1,6 @@
 
-tasks: open ./tests/PHPUnit/README.md
-  - init: make up
-
+tasks:
+  - init: open ./tests/PHPUnit/README.md
 
 
 vscode:
