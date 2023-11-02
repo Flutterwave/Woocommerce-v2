@@ -82,6 +82,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 			'body'        => wp_json_encode( $data )
 		) );
 
+		$this->skipTestOnTimeout( $response );
 		$this->assertNotWPError( $response );
 		// $response_body = json_decode( wp_remote_retrieve_body( $response ) );
 
