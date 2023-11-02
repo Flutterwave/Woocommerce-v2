@@ -631,7 +631,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 					'status'  => 'error',
 					'message' => 'Access Denied Hash does not match',
 				),
-				WP_Http::BAD_REQUEST
+				WP_Http::UNAUTHORIZED
 			);
 		}
 
@@ -641,7 +641,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 		if ( empty( $event->event ) && empty( $event->data ) ) {
 			wp_send_json(
 				array(
-					'status'  => 'success',
+					'status'  => 'error',
 					'message' => 'Webhook sent is deformed. missing data object.',
 				),
 				WP_Http::NO_CONTENT
