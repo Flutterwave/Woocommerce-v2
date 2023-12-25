@@ -2,14 +2,14 @@
 # This file is distributed under the MIT License.
 msgid ""
 msgstr ""
-"Project-Id-Version: Flutterwave WooCommerce 2.3.2\n"
+"Project-Id-Version: Flutterwave WooCommerce 2.3.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rave-woocommerce-payment-gateway\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-05-19T18:16:02+00:00\n"
+"POT-Creation-Date: 2023-12-24T22:36:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: rave-woocommerce-payment-gateway\n"
@@ -37,96 +37,96 @@ msgstr ""
 msgid "http://flutterwave.com/us"
 msgstr ""
 
-#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:137
+#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:156
 msgid "Visa"
 msgstr ""
 
-#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:141
+#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:160
 msgid "American Express"
 msgstr ""
 
-#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:145
+#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:164
 msgid "Mastercard"
 msgstr ""
 
-#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:152
+#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:171
 msgctxt "Name of credit card"
 msgid "Discover"
 msgstr ""
 
-#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:156
+#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:175
 msgid "JCB"
 msgstr ""
 
-#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:160
+#: includes/blocks/class-flutterwave-wc-gateway-blocks-support.php:179
 msgid "Diners"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:46
+#: includes/class-flw-wc-payment-gateway-event-handler.php:64
 msgid "Payment initialized via Flutterwave"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:48
+#: includes/class-flw-wc-payment-gateway-event-handler.php:66
 msgid "Your transaction reference: "
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:66
+#: includes/class-flw-wc-payment-gateway-event-handler.php:83
 msgid "Attention: New order has been placed on hold because of incorrect payment amount or currency. Please, look into it."
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:67
+#: includes/class-flw-wc-payment-gateway-event-handler.php:84
 msgid "Amount paid: "
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:67
+#: includes/class-flw-wc-payment-gateway-event-handler.php:84
 msgid "Order amount: "
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:67
+#: includes/class-flw-wc-payment-gateway-event-handler.php:84
 msgid " Reference: "
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:107
+#: includes/class-flw-wc-payment-gateway-event-handler.php:124
 msgid "The payment failed on Flutterwave"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:112
+#: includes/class-flw-wc-payment-gateway-event-handler.php:129
 msgid "Reason for Failure : "
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:124
+#: includes/class-flw-wc-payment-gateway-event-handler.php:141
 msgid "Confirming payment on Flutterwave"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:134
+#: includes/class-flw-wc-payment-gateway-event-handler.php:151
 msgid "An error occured while confirming payment on Flutterwave"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:139
+#: includes/class-flw-wc-payment-gateway-event-handler.php:156
 msgid "Attention: New order has been placed on hold because we could not confirm the payment. Please, look into it."
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:155
+#: includes/class-flw-wc-payment-gateway-event-handler.php:172
 msgid "The customer clicked on the cancel button on Checkout."
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:157
+#: includes/class-flw-wc-payment-gateway-event-handler.php:174
 msgid "Attention: Customer clicked on the cancel button on the payment gateway. We have updated the order to cancelled status. "
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:158
+#: includes/class-flw-wc-payment-gateway-event-handler.php:175
 msgid "Please, confirm from the order notes that there is no note of a successful transaction. If there is, this means that the user was debited and you either have to give value for the transaction or refund the customer."
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:172
+#: includes/class-flw-wc-payment-gateway-event-handler.php:189
 msgid "The payment didn't return a valid response. It could have timed out or abandoned by the customer on Flutterwave"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:177
+#: includes/class-flw-wc-payment-gateway-event-handler.php:194
 msgid "Attention: New order has been placed on hold because we could not get a definite response from the payment gateway. Kindly contact the Rave support team at hi@flutterwave.com to confirm the payment."
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway-event-handler.php:178
+#: includes/class-flw-wc-payment-gateway-event-handler.php:195
 msgid "Payment Reference: "
 msgstr ""
 
@@ -252,7 +252,7 @@ msgstr ""
 
 #: includes/class-flw-wc-payment-gateway.php:329
 msgctxt "payment_options"
-msgid "Default"
+msgid "All"
 msgstr ""
 
 #: includes/class-flw-wc-payment-gateway.php:330
@@ -331,11 +331,20 @@ msgid "Check the box if you want to disable barter."
 msgstr ""
 
 #. translators: %s: url
-#: includes/class-flw-wc-payment-gateway.php:448
+#: includes/class-flw-wc-payment-gateway.php:452
 msgid "Flutterwave is enabled, but the API keys are not set. Please <a href=\"%s\">set your Flutterwave API keys</a> to be able to accept payments."
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:539
+#. translators: %s: shop cart url
+#: includes/class-flw-wc-payment-gateway.php:489
+msgid "Sorry, your session has expired. <a href=\"%s\" class=\"wc-backward\">Return to shop</a>"
+msgstr ""
+
+#: includes/class-flw-wc-payment-gateway.php:503
+msgid "We were unable to process your order, please try again."
+msgstr ""
+
+#: includes/class-flw-wc-payment-gateway.php:550
 msgid "Order Payment"
 msgstr ""
 
@@ -345,7 +354,7 @@ msgstr ""
 
 #. translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version.
 #: includes/notices/class-flw-wc-payment-gateway-notices.php:32
-msgid "Flutterwave WooCommerce requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported."
+msgid "Flutterwave WooCommerce requires WooCommerce %1$s or greater to be installed and active. kindly upgrade to a higher version of WooCommerce or downgrade to a lower version of Flutterwave WooCommerce that supports WooCommerce version %2$s."
 msgstr ""
 
 #. Translators: %s Plugin name.
@@ -366,19 +375,27 @@ msgstr ""
 msgid "Install WooCommerce"
 msgstr ""
 
+#: build/index.js:1
 #: client/blocks/payment-method/index.js:19
+#: build/index.js:102
 msgid "You may be redirected to a secure page to complete your payment."
 msgstr ""
 
+#: build/index.js:1
 #: client/blocks/payment-method/index.js:32
+#: build/index.js:115
 msgid "Flutterwave"
 msgstr ""
 
+#: build/index.js:1
 #: client/blocks/payment-method/index.js:38
+#: build/index.js:121
 msgid "Proceed to Flutterwave"
 msgstr ""
 
+#: build/index.js:1
 #: client/blocks/payment-method/index.js:44
+#: build/index.js:127
 msgid "Payment via Flutterwave"
 msgstr ""
 

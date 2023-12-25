@@ -74,7 +74,7 @@ final class Flutterwave {
 		$this->define( 'FLW_WC_PLUGIN_DIR', plugin_dir_path( FLW_WC_PLUGIN_FILE ) );
 		$this->define( 'FLW_WC_DIR_PATH', plugin_dir_path( FLW_WC_PLUGIN_FILE ) );
 		$this->define( 'FLW_WC_VERSION', $this->version );
-		$this->define( 'FLW_WC_MIN_WC_VER', '7.1' );
+		$this->define( 'FLW_WC_MIN_WC_VER', '6.9.1' );
 		$this->define( 'FLW_WC_URL', trailingslashit( plugins_url( '/', FLW_WC_PLUGIN_FILE ) ) );
 		$this->define( 'FLW_WC_EPSILON', 0.01 );
 	}
