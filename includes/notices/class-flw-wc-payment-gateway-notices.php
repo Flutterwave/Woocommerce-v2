@@ -28,7 +28,7 @@ class FLW_WC_Payment_Gateway_Notices {
 	 * @return void
 	 */
 	public function woocommerce_wc_not_supported() {
-    /* translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version. */
+		/* translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version. */
 		echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'Flutterwave WooCommerce requires WooCommerce %1$s or greater to be installed and active. kindly upgrade to a higher version of WooCommerce or downgrade to a lower version of Flutterwave WooCommerce that supports WooCommerce version %2$s.', 'rave-woocommerce-payment-gateway' ), esc_attr( FLW_WC_MIN_WC_VER ), esc_attr( WC_VERSION ) ) . '</strong></p></div>';
-  } 
+	}
 }
