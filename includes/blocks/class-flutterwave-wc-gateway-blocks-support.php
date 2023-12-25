@@ -35,7 +35,7 @@ final class Flutterwave_WC_Gateway_Blocks_Support extends AbstractPaymentMethodT
 	 *
 	 * @var WC_Payment_Gateway
 	 */
-	protected WC_Payment_Gateway $gateway;
+	protected $gateway;
 
 	/**
 	 * Initialize the Block.
@@ -44,7 +44,18 @@ final class Flutterwave_WC_Gateway_Blocks_Support extends AbstractPaymentMethodT
 	 */
 	public function initialize() {
 		$this->settings = get_option( 'woocommerce_rave_settings', array() );
-		$this->gateway  = new FLW_WC_Payment_Gateway();
+
+		if ( version_compare( WC_VERSION, '6.9.1', '<' ) ) {
+			// For backwards compatibility.
+			if ( ! class_exists( 'FLW_WC_Payment_Gateway' ) ) {
+				require_once dirname( FLW_WC_PLUGIN_FILE ) . '/includes/class-flw-wc-payment-gateway.php';
+			}
+
+			$this->gateway = new FLW_WC_Payment_Gateway();
+		} else {
+			$gateways      = WC()->payment_gateways->payment_gateways();
+			$this->gateway = $gateways[ $this->name ];
+		}
 	}
 
 	/**
@@ -53,6 +64,14 @@ final class Flutterwave_WC_Gateway_Blocks_Support extends AbstractPaymentMethodT
 	 * @return boolean
 	 */
 	public function is_active(): bool {
+		if ( version_compare( WC_VERSION, '6.9.0', '>' ) ) {
+			$gateways = WC()->payment_gateways->payment_gateways();
+
+			if ( ! isset( $gateways[ $this->name ] ) ) {
+				return false;
+			}
+		}
+
 		return $this->gateway->is_available();
 	}
 

@@ -9,8 +9,8 @@
  * License: MIT License
  * Text Domain: rave-woocommerce-payment-gateway
  * Domain Path: i18n/languages
- * WC requires at least:   7.1
- * WC tested up to:        8.2.1
+ * WC requires at least:   6.9.1
+ * WC tested up to:        8.4.0
  * Requires at least:      5.6
  * Requires PHP:           7.4
  *
@@ -58,6 +58,17 @@ function flutterwave_woocommerce_blocks_support() {
 
 // add woocommerce block support.
 add_action( 'woocommerce_blocks_loaded', 'flutterwave_woocommerce_blocks_support' );
+
+
+add_action(
+	'before_woocommerce_init',
+	function() {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+	}
+);
+
 
 /**
  * Add the Settings link to the plugin
