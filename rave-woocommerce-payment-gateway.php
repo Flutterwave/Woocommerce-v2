@@ -69,7 +69,6 @@ add_action(
 	}
 );
 
-
 /**
  * Add the Settings link to the plugin
  *
