@@ -25,7 +25,7 @@ const FLW_ASSETS = getBlocksConfiguration()?.asset_url ?? null;
 const paymentMethod = {
 	name: PAYMENT_METHOD_NAME,
 	label: (
-		<div style={{ display: 'flex', flexDirection: 'row', rowGap: '.5em'}}>
+		<div style={{ display: 'flex', flexDirection: 'row', rowGap: '.5em', alignItems: 'center'}}>
 			<img
 			src={ `${ FLW_ASSETS }/img/flutterwave-full.svg` }
 			alt={ decodeEntities(
