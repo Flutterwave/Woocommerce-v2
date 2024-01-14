@@ -34,6 +34,7 @@ build/*.map
 phpunit.xml.dist
 playwright.config.js
 .gitpod.yml
+.gitpod.Dockerfile
 /node_modules
 /vendor
 rave-woocommerce-payment-gateway.zip
