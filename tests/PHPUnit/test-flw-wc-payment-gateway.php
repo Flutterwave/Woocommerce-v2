@@ -97,6 +97,31 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests the gateway webhook on invalid transaction reference
+	 * 
+	 */
+	public function test_webhook_transaction_not_found() {
+		$hash = "a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40";
+		$data = [ "event" => "charge.completed", "data" => ["tx_ref" => "Rave-Pages846040622798"]];
+
+		$webhook_url = WC()->api_request_url( 'Flw_WC_Payment_Webhook' );
+
+		//make a request to the webhook url.
+		$response = wp_remote_post( $webhook_url, array(
+			'method'      => 'POST',
+			'headers'     => array(
+				'Content-Type' => 'application/json',
+				'Authorization' => 'Bearer '.getenv('SECRET_KEY'),
+				'VERIF-HASH' => $hash
+			),
+			'body'        => wp_json_encode( $data )
+		) );
+
+
+		$this->assertEquals( WP_Http::OK, wp_remote_retrieve_response_code( $response ) );
+	}
+
+	/**
 	 * Tests the gateway webhook.
 	 *
 	 * @dataProvider webhook_204_provider
