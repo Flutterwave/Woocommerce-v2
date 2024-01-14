@@ -666,11 +666,11 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 			$event_data = $event->data;
 
 			// check if transaction reference starts with WOOC on hpos enabled.
-			if (substr($event_data->tx_ref, 0, 4) !== "WOOC") {
+			if ( substr( $event_data->tx_ref, 0, 4 ) !== 'WOOC' ) {
 				wp_send_json(
 					array(
 						'status'  => 'failed',
-						'message' => "The transaction reference " . $event_data->tx_ref . " is not a Flutterwave WooCommerce Generated transaction",
+						'message' => 'The transaction reference ' . $event_data->tx_ref . ' is not a Flutterwave WooCommerce Generated transaction',
 					),
 					WP_Http::OK
 				);
