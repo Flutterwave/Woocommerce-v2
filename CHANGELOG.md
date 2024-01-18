@@ -1,4 +1,11 @@
 # Changelog
+## 2.3.5 | 01-01-2024
+Added Support for WooCommerce HPOS.
+### Version Changes
+- [ADDED] Support for WooCommerce HPOS.
+- [FIXED] WooCommerce Blocks Compatibility Issues with WooCommerce 7.0 to 6.9.1.
+- [FIXED] Payment Option alignment on WooCommerce Checkout Block.
+- [FIXED] Handle Cancel Event on redirect Checkout option.
 ## 2.3.4 | 01-11-2023
 Handle Webhook Acknowledgement.
 ### Version Changes

@@ -416,8 +416,9 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 		}
 
 		$flutterwave_request['payment_options'] = $this->payment_options;
-
-		$sdk = $this->sdk->set_event_handler( new FlwEventHandler( $order ) );
+		$custom_nonce                           = wp_create_nonce();
+		$flutterwave_request['redirect_url']    = $flutterwave_request['redirect_url'] . '&_wpnonce=' . $custom_nonce;
+		$sdk                                    = $this->sdk->set_event_handler( new FlwEventHandler( $order ) );
 
 		$response = $sdk->get_client()->request( $this->sdk::$standard_inline_endpoint, 'POST', $flutterwave_request );
 		if ( ! is_wp_error( $response ) ) {
@@ -663,6 +664,17 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 
 			$event_type = $event->event;
 			$event_data = $event->data;
+
+			// check if transaction reference starts with WOOC on hpos enabled.
+			if ( substr( $event_data->tx_ref, 0, 4 ) !== 'WOOC' ) {
+				wp_send_json(
+					array(
+						'status'  => 'failed',
+						'message' => 'The transaction reference ' . $event_data->tx_ref . ' is not a Flutterwave WooCommerce Generated transaction',
+					),
+					WP_Http::OK
+				);
+			}
 
 			$txn_ref  = sanitize_text_field( $event_data->tx_ref );
 			$o        = explode( '_', $txn_ref );

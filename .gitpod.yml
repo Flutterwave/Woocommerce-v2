@@ -1,4 +1,6 @@
-
+image:
+    file: .gitpod.Dockerfile
+    
 tasks:
   - init: open ./tests/PHPUnit/README.md
 
