@@ -708,6 +708,18 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 			$o        = explode( '_', $txn_ref );
 			$order_id = intval( $o[1] );
 			$order    = wc_get_order( $order_id );
+
+			if(!$order) {
+				wp_send_json(
+					array(
+						'status'  => 'error',
+						'message' => 'Invalid Reference',
+						'reason' => 'Order does not belong to store'
+					),
+					WP_Http::BAD_REQUEST
+				);
+			}
+
 			// get order status.
 			$current_order_status = $order->get_status();
 

@@ -27,6 +27,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 	 * Sets up things all tests need.
 	 */
 	public function set_up() {
+
 		parent::set_up();
 
 		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
@@ -62,13 +63,13 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 		$this->assertTrue( $this->gateway->supports( 'products' ) );
 	}
 
-
 	/**
 	 * Tests the gateway webhook.
 	 *
 	 * @dataProvider webhook_provider
 	 */
 	public function test_webhook_is_accessible( string $hash, array $data, array $wbk_response ) {
+
 		$webhook_url = WC()->api_request_url( 'Flw_WC_Payment_Webhook' );
 
 		//make a request to the webhook url.
@@ -84,9 +85,9 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 
 		$this->skipTestOnTimeout( $response );
 		$this->assertNotWPError( $response );
-		// $response_body = json_decode( wp_remote_retrieve_body( $response ) );
+		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 
-		// print_r($response_body);
+		print_r($response_body);
 
 		// when testing webhook accessibility.
 		// when request body is has a successful payment event.
@@ -116,7 +117,6 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 			),
 			'body'        => wp_json_encode( $data )
 		) );
-
 
 		$this->assertEquals( WP_Http::OK, wp_remote_retrieve_response_code( $response ) );
 	}
@@ -262,7 +262,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 					'amount' => 2000,
 					'currency' => 'NGN',
 					'status' => 'successful',
-					'event' => 'test_access'
+					'event' => 'test_assess'
 				),
 				array(
 					'status'  => 'success',
