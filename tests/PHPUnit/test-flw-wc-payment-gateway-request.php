@@ -76,7 +76,7 @@ class Test_FLW_WC_Payment_Gateway_Request extends \WP_UnitTestCase {
 						'tx_ref'          => $txnref,
 						'currency'        => $order->get_currency(),
 						'payment_options' => 'card',
-						'redirect_url'    => get_site_url().'/?wc-api=FLW_WC_Payment_Gateway?order_id=1',
+						'redirect_url'    => get_site_url().'/?wc-api=FLW_WC_Payment_Gateway&order_id=1',
 						'payload_hash'   => $hash,
 						'customer'        => [
 							'email'        => 'jbond@gmail.com',
