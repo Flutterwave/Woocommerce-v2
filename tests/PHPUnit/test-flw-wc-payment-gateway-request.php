@@ -49,7 +49,7 @@ class Test_FLW_WC_Payment_Gateway_Request extends \WP_UnitTestCase {
 			$txnref = 'WOOC_'.$order->get_id().'_TEST';
 
 			$data_to_join  = array(
-				'amount'     => $order->get_total(),
+				'amount'     => (float) $order->get_total(),
 				'currency'   => $order->get_currency(),
 				'email'      => $order->get_billing_email(),
 				'tx_ref'     => $txnref,
