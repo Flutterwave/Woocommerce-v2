@@ -30,6 +30,7 @@
         }
     },
     "scripts": {
+        "check-node":"node -v",
         "test": "./vendor/bin/pest --coverage=coverage --coverage-text",
         "standards:check": "./vendor/bin/phpcs --standard=WordPress --extensions=php --ignore=*/vendor/*,*/tests/*,*/data/*,*/assets/*,*/.docker/*,*/build/*.asset.php,*/node_modules/* .",
         "standards:fix": "./vendor/bin/phpcbf --standard=WordPress --extensions=php --ignore=*/vendor/*,*/tests/*,*/data/*,*/assets/*,*/.docker/*,*/build/*.asset.php,*/node_modules/* .",
