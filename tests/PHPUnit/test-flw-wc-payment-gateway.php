@@ -127,7 +127,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 		$this->assertNotWPError($response);
 
 		// Decode the response body
-		$response_body = json_decode(wp_remote_retrieve_body($response));
+		$response_body = json_decode(wp_remote_retrieve_body($response), TRUE);
 
 		// Check if the HTTP status code is 200 (OK)
 		$this->assertEquals(200, wp_remote_retrieve_response_code($response));
