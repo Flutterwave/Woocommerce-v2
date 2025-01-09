@@ -91,7 +91,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 				// Mock response for successful webhook call
 				if ($data['event'] === 'charge.completed' && $data['data']['status'] === 'successful') {
 					return [
-						'body'    => json_encode(['status' => 'success', 'message' => 'Order Processed Successfully.']),
+						'body'    => json_encode(['status' => 'success', 'message' => 'Order Processed Successfully']),
 						'headers' => ['Content-Type' => 'application/json'],
 						'response' => ['code' => 200, 'message' => 'OK']
 					];
@@ -100,7 +100,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 				// Mock response for failed webhook call
 				if ($data['event'] === 'charge.completed' && $data['data']['status'] === 'failed') {
 					return [
-						'body'    => json_encode(['status' => 'error', 'message' => 'Order Processed Successfully']),
+						'body'    => json_encode(['status' => 'success', 'message' => 'Order Processed Successfully']),
 						'headers' => ['Content-Type' => 'application/json'],
 						'response' => ['code' => 200, 'message' => 'OK']
 					];
