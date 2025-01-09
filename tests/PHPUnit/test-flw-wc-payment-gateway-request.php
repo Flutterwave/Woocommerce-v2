@@ -72,7 +72,7 @@ class Test_FLW_WC_Payment_Gateway_Request extends \WP_UnitTestCase {
 					$order,
 					'FLWSECK-XXXXXXXXXXXXXXX-X',
 					[
-						'amount'          => $order->get_total(),
+						'amount'          => (float) $order->get_total(),
 						'tx_ref'          => $txnref,
 						'currency'        => $order->get_currency(),
 						'payment_options' => 'card',
