@@ -1,4 +1,10 @@
 # Changelog
+## 2.3.6 | 01-09-2025
+Bug Fixes and Webhook Handler improvements.
+### Version Changes
+- [FIXED] Dynamic Adjustment to Custom Permalink Set by Merchant.
+- [FIXED] Redirect Payment option return a Payment Mismatch Error.
+- [FIXED] Reject Invalid Order Reference hooks.
 ## 2.3.5 | 01-01-2024
 Added Support for WooCommerce HPOS.
 ### Version Changes

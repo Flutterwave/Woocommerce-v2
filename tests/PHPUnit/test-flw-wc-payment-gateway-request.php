@@ -49,7 +49,7 @@ class Test_FLW_WC_Payment_Gateway_Request extends \WP_UnitTestCase {
 			$txnref = 'WOOC_'.$order->get_id().'_TEST';
 
 			$data_to_join  = array(
-				'amount'     => $order->get_total(),
+				'amount'     => (float) $order->get_total(),
 				'currency'   => $order->get_currency(),
 				'email'      => $order->get_billing_email(),
 				'tx_ref'     => $txnref,
@@ -72,11 +72,11 @@ class Test_FLW_WC_Payment_Gateway_Request extends \WP_UnitTestCase {
 					$order,
 					'FLWSECK-XXXXXXXXXXXXXXX-X',
 					[
-						'amount'          => $order->get_total(),
+						'amount'          => (float) $order->get_total(),
 						'tx_ref'          => $txnref,
 						'currency'        => $order->get_currency(),
 						'payment_options' => 'card',
-						'redirect_url'    => get_site_url().'/?wc-api=FLW_WC_Payment_Gateway?order_id=1',
+						'redirect_url'    => get_site_url().'/?wc-api=FLW_WC_Payment_Gateway&order_id=1',
 						'payload_hash'   => $hash,
 						'customer'        => [
 							'email'        => 'jbond@gmail.com',
