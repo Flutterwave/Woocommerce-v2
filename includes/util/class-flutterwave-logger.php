@@ -50,7 +50,7 @@ final class Flutterwave_Logger {
 	/**
 	 * Logger Constructor.
 	 */
-	private function ___construct() {}
+	private function __construct() {}
 
 	/**
 	 * Get Logger Instance.

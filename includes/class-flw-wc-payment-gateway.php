@@ -207,7 +207,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 		}
 
 		$this->logger = Flutterwave_Logger::instance();
-		$this->sdk = new FlwSdk( $this->secret_key, self::$log_enabled );
+		$this->sdk    = new FlwSdk( $this->secret_key, self::$log_enabled );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ) );
 
@@ -600,7 +600,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 
 		if ( ! isset( $_GET['_wpnonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) ) ) {
 			if ( isset( $_GET['status'] ) && 'cancelled' === $_GET['status'] ) {
-				$this->logger->info('transaction cancelled by the customer.');
+				$this->logger->info( 'transaction cancelled by the customer.' );
 				$sdk->set_event_handler( new FlwEventHandler( $order ) )->cancel_payment( $txn_ref );
 				header( 'Location: ' . wc_get_cart_url() );
 				die();
@@ -614,7 +614,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 			$order    = wc_get_order( $order_id );
 
 			if ( isset( $_GET['status'] ) && 'cancelled' === $_GET['status'] ) {
-				$this->logger->info('transaction cancelled by the customer.');
+				$this->logger->info( 'transaction cancelled by the customer.' );
 				$sdk->set_event_handler( new FlwEventHandler( $order ) )->cancel_payment( $txn_ref );
 				header( 'Location: ' . wc_get_cart_url() );
 				die();
@@ -666,7 +666,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 		}
 
 		http_response_code( 200 );
-		$this->logger->info("Webhook recieved: ". $event);
+		$this->logger->info( 'Webhook recieved: ' . $event );
 		$event = json_decode( $event );
 
 		if ( empty( $event->event ) && empty( $event->data ) ) {
