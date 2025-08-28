@@ -1,7 +1,7 @@
 {
 	"name": "rave-woocommerce-payment-gateway",
 	"title": "flutterwave-woocommerce",
-	"version": "2.3.7",
+	"version": "3.1.0",
 	"description": "Official WooCommerce payment gateway for Flutterwave",
 	"scripts": {
 		"postinstall": "composer install",

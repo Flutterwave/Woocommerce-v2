@@ -3,7 +3,7 @@ Contributors: theflutterwave
 Tags: fintech,flutterwave, woocommerce, payments, nigeria, mastercard, visa, target,Naira,payments,verve,donation,church,shop,store, ghana, kenya, international, mastercard, visa
 Requires at least: 3.1
 Tested up to: 6.7.1
-Stable tag: 2.3.7
+Stable tag: 3.1.0
 License: MIT
 License URI: https://github.com/Flutterwave/Woocommerce/blob/master/LICENSE
 
@@ -22,7 +22,7 @@ Accept Credit card, Debit card and Bank account payment directly on your store w
 = Requirements =
 
 1. Flutterwave for business [API Keys](https://developer.flutterwave.com/docs/integration-guides/authentication)
-2. [WooCommerce](https://woocommerce.com/)
+2. [WooCommerce](https://woocommerce.com/) version: >= 6.9
 6. Supported PHP version: 7.4.0 - 8.1.0
 
 == Installation ==

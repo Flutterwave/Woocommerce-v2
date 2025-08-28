@@ -1,4 +1,10 @@
 # Changelog
+
+## 3.1.0 | 28-08-2025
+General Update
+### Version Changes
+- [ADDED] Set Minimum Support to WooCommerce 6.9 or greater.
+- [ADDED] Flutterwave Logger instance using wc_logger.
 ## 2.3.6 | 01-09-2025
 Bug Fixes and Webhook Handler improvements.
 ### Version Changes
