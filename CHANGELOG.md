@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.2.0 | 18-09-2025
+### Version Changes
+- [CHANGED] WooCommerce checkout UI optimisation for mobile screens
 ## 3.1.0 | 28-08-2025
 General Update
 ### Version Changes

@@ -1,4 +1,6 @@
 == Changelog ==
+= 3.2.0 =
+* Updated: WooCommerce checkout UI optimisation for mobile screens.
 = 3.1.0 =
 * Added: Set Minimum Support to WooCommerce 6.9 or greater.
 * Added: Flutterwave Logger instance using wc_logger.
