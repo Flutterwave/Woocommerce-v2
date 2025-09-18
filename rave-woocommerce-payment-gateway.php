@@ -90,7 +90,6 @@ add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'flw_plugin_ac
 add_filter( 'woocommerce_gateway_title', 'flutterwave_title', 10, 2 );
 add_filter( 'woocommerce_gateway_icon', 'flutterwave_gateway_icon', 10, 2 );
 
-
 /**
  * Customize the title and description of the Flutterwave payment gateway.
  *
