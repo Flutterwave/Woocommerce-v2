@@ -3,7 +3,7 @@
  * Plugin Name: Flutterwave WooCommerce
  * Plugin URI: https://developer.flutterwave.com/
  * Description: Official WooCommerce payment gateway for Flutterwave.
- * Version: 3.1.0
+ * Version: 3.2.0
  * Author: Flutterwave Developers
  * Author URI: http://flutterwave.com/us
  * License: MIT License
@@ -86,6 +86,46 @@ function flw_plugin_action_links( array $links ): array {
 }
 
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'flw_plugin_action_links' );
+
+add_filter('woocommerce_gateway_title', 'flutterwave_title', 10, 2);
+add_filter('woocommerce_gateway_icon', 'flutterwave_gateway_icon', 10, 2);
+
+function flutterwave_title($title, $gateway_id) {
+
+    if($gateway_id !== 'rave') {
+        return $title;
+    }
+
+    if (wp_is_mobile()) {
+        ob_start();
+        ?>
+        <div class="rave-front-checkout" style="display: flex; flex-direction: row; justify-content: left; align-items: center; padding: 24px; background: #FFF; border-radius: 4px;">
+            <p style="margin: 10px 16px 10px 16px; font-size: 20px; font-weight: 500; line-height: 100%;">
+                Flutterwave
+            </p>
+            <img src="<?= plugin_dir_url(__FILE__) . 'assets/img/flutterwave-full.svg' ?>" alt="flutterwave" style="height: 40px;" />
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+
+    ob_start();
+    ?>
+    <label class="payment_method_rave">
+            Flutterwave
+        <img decoding="async" src="<?= plugin_dir_url(__FILE__) . 'assets/img/rave.png' ?>" alt="flutterwave" style="height: 40px;" />
+    </label>
+    <div class="payment_box payment_method_rave" style="display:none;">
+        <p>Powered by Flutterwave: Accepts Mastercard, Visa, Verve, Discover, AMEX, Diners Club and Union Pay.</p>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+function flutterwave_gateway_icon($icon, $gateway_id) {
+    return ($gateway_id === 'rave') ? '' : $icon;
+}
+
 
 
 
