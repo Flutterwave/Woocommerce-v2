@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "npm" # or "pip", "maven", etc.
+    directory: "/" # location of the manifest file
+    schedule:
+      interval: "daily" # or "weekly", "monthly"
+    target-branch: "FTPI-1288"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "dev"
