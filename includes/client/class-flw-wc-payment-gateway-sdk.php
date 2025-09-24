@@ -227,12 +227,13 @@ final class FLW_WC_Payment_Gateway_Sdk {
 					$this->event_handler->on_successful( $response->data );
 				}
 			} else {
-				$this->logger->notice( 'Transaction Requeried Failed' );
+				$this->logger->notice( 'Transaction Requeried Failed: ' . wp_json_encode( $response ) );
 				$this->event_handler->on_failure( $response );
 			}
 		} else {
 			// TODO: handle request errors.
-			$this->logger->notice( 'Transaction Requeried Failed. Awaiting Webhook Verification...' );
+			$this->logger->notice( 'Transaction Requeried Failed. Awaiting Webhook Verification...' . wp_json_encode( $response->get_error_message() ) );
+
 		}
 
 	}

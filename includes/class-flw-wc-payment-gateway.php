@@ -423,6 +423,8 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 		$flutterwave_request['redirect_url']    = $flutterwave_request['redirect_url'] . '&_wpnonce=' . $custom_nonce;
 		$sdk                                    = $this->sdk->set_event_handler( new FlwEventHandler( $order ) );
 
+		$this->logger->info( wp_json_encode( $flutterwave_request ) );
+
 		$response = $sdk->get_client()->request( $this->sdk::$standard_inline_endpoint, 'POST', $flutterwave_request );
 		if ( ! is_wp_error( $response ) ) {
 			$response = json_decode( $response['body'] );
@@ -431,6 +433,8 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 				'redirect' => $response->data->link,
 			);
 		} else {
+			$this->logger->error( 'Error: ' . $response->get_error_message() );
+
 			wc_add_notice( 'Unable to Connect to Flutterwave.', 'error' );
 			// redirect user to check out page.
 			return array(

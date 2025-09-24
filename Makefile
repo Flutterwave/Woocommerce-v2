@@ -13,6 +13,11 @@ down:
 	docker-compose -f .docker/docker-compose.yml  down
 
 
+clean:
+	rm -rf node_modules/
+	rm *.zip
+
+
 dev-js:
 	npm run start
 

@@ -74,13 +74,16 @@ module.exports = {
 			( plugin ) =>
 				plugin.constructor.name !== 'DependencyExtractionWebpackPlugin'
 		),
-		new WooCommerceDependencyExtractionWebpackPlugin(
-			{
-				requestToExternal,
-				requestToHandle
-			}
-		),
+		new WooCommerceDependencyExtractionWebpackPlugin({
+			requestToExternal,
+			requestToHandle,
+			external: (request) => false // fallback for all other modules
+		}),
 	],
+	externals: {
+		'@woocommerce/blocks-registry': 'wc.wcBlocksRegistry',
+		'@woocommerce/settings': 'wc.wcSettings',
+  	},
 	resolve: {
 		extensions: [ '.json', '.js', '.jsx' ],
 		modules: [ CLIENT_DIR, 'node_modules' ],
@@ -88,6 +91,6 @@ module.exports = {
 			wcflutterwave: CLIENT_DIR,
 		},
 	},
-	entry,
+	entry
 };
 

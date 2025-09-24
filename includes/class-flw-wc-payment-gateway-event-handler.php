@@ -50,7 +50,7 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 	 * @since 2.3.3
 	 * @return bool
 	 */
-	public function amounts_equal( $amount1, $amount2 ): bool {
+	public static function amounts_equal( $amount1, $amount2 ): bool {
 		return ! ( abs( floatval( $amount1 ) - floatval( $amount2 ) ) > FLW_WC_EPSILON );
 	}
 
@@ -75,7 +75,7 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 		if ( 'successful' === $transaction_data->status ) {
 			$amount = (float) $transaction_data->amount;
 
-			if ( $transaction_data->currency !== $this->order->get_currency() || ! $this->amounts_equal( $amount, $this->order->get_total() ) ) {
+			if ( $transaction_data->currency !== $this->order->get_currency() || ! self::amounts_equal( $amount, $this->order->get_total() ) ) {
 				$this->order->update_status( 'on-hold' );
 				$customer_note  = 'Thank you for your order.<br>';
 				$customer_note .= 'Your payment successfully went through, but we have to put your order <strong>on-hold</strong> ';
