@@ -2,7 +2,8 @@ image:
     file: .gitpod.Dockerfile
     
 tasks:
-  - init: open ./tests/PHPUnit/README.md
+  - init: |
+      curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && sudo mv wp-cli.phar /usr/local/bin/wp && pnpm add -g pnpm
 
 
 vscode:

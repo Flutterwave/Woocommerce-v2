@@ -91,13 +91,12 @@
 	"homepage": "https://github.com/bajoski34/Woocommerce-v2#readme",
 	"devDependencies": {
 		"@automattic/color-studio": "^2.5.0",
+		"@biomejs/biome": "2.2.4",
 		"@playwright/test": "^1.32.0",
 		"@svgr/cli": "^6.5.1",
-		"@woocommerce/dependency-extraction-webpack-plugin": "^2.2.0",
-		"@woocommerce/eslint-plugin": "^2.2.0",
-		"@wordpress/env": "^5.15.0",
-		"@wordpress/prettier-config": "^2.12.0",
-		"@wordpress/scripts": "^26.0.0",
+		"@woocommerce/dependency-extraction-webpack-plugin": "2.2.0",
+		"@wordpress/env": "^10.31.0",
+		"@wordpress/scripts": "^30.24.0",
 		"cross-env": "^7.0.3",
 		"dotenv": "^16.0.3",
 		"rimraf": "^5.0.0",
@@ -109,6 +108,9 @@
 	},
 	"dependencies": {
 		"@automattic/interpolate-components": "^1.2.1",
+		"@wordpress/html-entities": "^4.31.0",
+		"@wordpress/i18n": "^6.4.0",
+		"eslint-plugin-jsdoc": "^60.2.0",
 		"flutterwave-react-v3": "^1.3.0",
 		"gridicons": "^3.4.2"
 	}

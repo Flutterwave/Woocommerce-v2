@@ -1,0 +1,225 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
+	"vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
+	"files": { "ignoreUnknown": false },
+	"formatter": { "enabled": true, "indentStyle": "tab" },
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": false,
+			"a11y": {
+				"noAccessKey": "error",
+				"noAriaUnsupportedElements": "error",
+				"noAutofocus": "error",
+				"noDistractingElements": "error",
+				"noHeaderScope": "error",
+				"noInteractiveElementToNoninteractiveRole": "error",
+				"noLabelWithoutControl": "error",
+				"noNoninteractiveElementInteractions": "error",
+				"noNoninteractiveElementToInteractiveRole": "error",
+				"noNoninteractiveTabindex": "off",
+				"noPositiveTabindex": "error",
+				"noRedundantAlt": "error",
+				"noRedundantRoles": "error",
+				"noStaticElementInteractions": "error",
+				"useAltText": "error",
+				"useAnchorContent": "error",
+				"useAriaActivedescendantWithTabindex": "error",
+				"useAriaPropsForRole": "off",
+				"useAriaPropsSupportedByRole": "error",
+				"useFocusableInteractive": "error",
+				"useHeadingContent": "error",
+				"useHtmlLang": "error",
+				"useIframeTitle": "error",
+				"useKeyWithClickEvents": "error",
+				"useKeyWithMouseEvents": "error",
+				"useMediaCaption": "off",
+				"useValidAnchor": "error",
+				"useValidAriaProps": "error",
+				"useValidAriaRole": "error",
+				"useValidAriaValues": "error",
+				"useValidAutocomplete": "error"
+			},
+			"complexity": {
+				"noBannedTypes": "error",
+				"noUselessConstructor": "error",
+				"noUselessTypeConstraint": "error",
+				"noUselessUndefinedInitialization": "error",
+				"useLiteralKeys": "error"
+			},
+			"correctness": {
+				"noChildrenProp": "off",
+				"noConstAssign": "error",
+				"noInvalidConstructorSuper": "error",
+				"noInvalidUseBeforeDeclaration": "error",
+				"noPrecisionLoss": "error",
+				"noUndeclaredDependencies": "warn",
+				"noUndeclaredVariables": "error",
+				"noUnreachable": "error",
+				"noUnusedVariables": "error",
+				"useExhaustiveDependencies": "warn",
+				"useHookAtTopLevel": "error",
+				"useJsxKeyInIterable": "error",
+				"useParseIntRadix": "error",
+				"useSingleJsDocAsterisk": "error",
+				"useValidTypeof": "error"
+			},
+			"security": {
+				"noDangerouslySetInnerHtmlWithChildren": "error",
+				"noGlobalEval": "error"
+			},
+			"style": {
+				"noInferrableTypes": "error",
+				"noNamespace": "error",
+				"noNestedTernary": "error",
+				"noNonNullAssertion": "warn",
+				"noYodaExpression": "error",
+				"useArrayLiterals": "error",
+				"useAsConstAssertion": "error",
+				"useBlockStatements": "off",
+				"useCollapsedElseIf": "error",
+				"useConst": "error"
+			},
+			"suspicious": {
+				"noAlert": "error",
+				"noBitwiseOperators": "error",
+				"noCommentText": "error",
+				"noConsole": "error",
+				"noDebugger": "error",
+				"noDoubleEquals": "error",
+				"noDuplicateCase": "error",
+				"noDuplicateClassMembers": "error",
+				"noDuplicateJsxProps": "error",
+				"noDuplicateObjectKeys": "error",
+				"noDuplicateParameters": "error",
+				"noEmptyBlockStatements": "off",
+				"noExplicitAny": "error",
+				"noExtraNonNullAssertion": "error",
+				"noFallthroughSwitchClause": "error",
+				"noIrregularWhitespace": "error",
+				"noMisleadingInstantiator": "error",
+				"noRedeclare": "error",
+				"noUnsafeNegation": "error",
+				"noVar": "error",
+				"noWith": "error",
+				"useAdjacentOverloadSignatures": "error",
+				"useIterableCallbackReturn": "error",
+				"useNamespaceKeyword": "error"
+			}
+		},
+		"includes": [
+			"**",
+			"**/*.d.ts",
+			"**",
+			"**/.eslintrc.js",
+			"!**/build",
+			"!**/assets",
+			"!**/bin",
+			"!**/docs",
+			"!**/includes",
+			"!i18n/languages",
+			"!**/release",
+			"!**/tasks",
+			"!**/templates",
+			"!**/vendor",
+			"!**/tests"
+		]
+	},
+	"javascript": {
+		"formatter": { "quoteStyle": "double" },
+		"globals": [
+			"wcSettings",
+			"jest/globals",
+			"wp",
+			"window",
+			"jest",
+			"document"
+		]
+	},
+	"overrides": [
+		{ "includes": ["*.js", "*.jsx"], "linter": { "rules": {} } },
+		{ "includes": ["*.ts", "*.tsx"], "linter": { "rules": {} } },
+		{
+			"includes": ["**/stories/*.js", "**/stories/*.jsx", "**/docs/example.js"],
+			"linter": { "rules": {} }
+		},
+		{ "includes": ["**/@(test|__tests__)/**/*.js", "**/tests/**/*.js"] },
+		{
+			"includes": ["**/*.ts", "**/*.tsx"],
+			"linter": { "rules": { "correctness": { "noUnusedVariables": "off" } } }
+		},
+		{
+			"includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+			"linter": {
+				"rules": {
+					"complexity": { "noArguments": "error" },
+					"correctness": {
+						"noConstAssign": "off",
+						"noGlobalObjectCalls": "off",
+						"noInvalidConstructorSuper": "off",
+						"noSetterReturn": "off",
+						"noUndeclaredVariables": "off",
+						"noUnreachable": "off",
+						"noUnreachableSuper": "off",
+						"useValidTypeof": "off"
+					},
+					"style": { "useConst": "error" },
+					"suspicious": {
+						"noDuplicateClassMembers": "off",
+						"noDuplicateObjectKeys": "off",
+						"noDuplicateParameters": "off",
+						"noFunctionAssign": "off",
+						"noImportAssign": "off",
+						"noRedeclare": "off",
+						"noUnsafeNegation": "off",
+						"noVar": "error",
+						"useGetterReturn": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+			"linter": {
+				"rules": {
+					"complexity": { "noArguments": "error" },
+					"correctness": {
+						"noConstAssign": "off",
+						"noGlobalObjectCalls": "off",
+						"noInvalidConstructorSuper": "off",
+						"noSetterReturn": "off",
+						"noUndeclaredVariables": "off",
+						"noUnreachable": "off",
+						"noUnreachableSuper": "off",
+						"useValidTypeof": "off"
+					},
+					"style": { "useConst": "error" },
+					"suspicious": {
+						"noDuplicateClassMembers": "off",
+						"noDuplicateObjectKeys": "off",
+						"noDuplicateParameters": "off",
+						"noFunctionAssign": "off",
+						"noImportAssign": "off",
+						"noRedeclare": "off",
+						"noUnsafeNegation": "off",
+						"noVar": "error",
+						"useGetterReturn": "off"
+					}
+				}
+			}
+		},
+		{ "includes": ["*.native.js"], "linter": { "rules": {} } },
+		{
+			"includes": [
+				"*.test.js",
+				"**/test/*.js",
+				"packages/e2e-test-utils/**/*.js"
+			],
+			"linter": { "rules": {} }
+		}
+	],
+	"assist": {
+		"enabled": true,
+		"actions": { "source": { "organizeImports": "on" } }
+	}
+}

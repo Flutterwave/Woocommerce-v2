@@ -13,6 +13,7 @@
  * WC tested up to:        8.4.0
  * Requires at least:      5.6
  * Requires PHP:           7.4
+ * Requires Plugins: woocommerce
  *
  * @package Flutterwave WooCommerce
  **/
@@ -103,6 +104,10 @@ function flutterwave_title( $title, $gateway_id ) {
 		return $title;
 	}
 
+	if ( is_admin() ) {
+		return 'Flutterwave';
+	}
+
 	if ( wp_is_mobile() ) {
 		ob_start();
 		?>
@@ -122,9 +127,6 @@ function flutterwave_title( $title, $gateway_id ) {
 			Flutterwave
 		<img src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'assets/img/rave.png' ); ?>" alt="flutterwave" style="height: 40px;" />
 	</label>
-	<div class="payment_box payment_method_rave" style="display:none;">
-		<p>Powered by Flutterwave: Accepts Mastercard, Visa, Verve, Discover, AMEX, Diners Club and Union Pay.</p>
-	</div>
 	<?php
 	return ob_get_clean();
 }

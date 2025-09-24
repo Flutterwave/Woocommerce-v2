@@ -1,9 +1,9 @@
-jQuery( function ( $ ) {
+jQuery( ( $ ) => {
 	$.blockUI({message: '<p> Loading Payment Modal...</p>'});
 	let payment_made = false;
-	const redirectPost = function (location, args) {
+	const redirectPost = (location, args) => {
 		let form = "";
-		$.each(args, function (key, value) {
+		$.each(args, (key, value) => {
 			// value = value.split('"').join('\"')
 			form += '<input type="hidden" name="' + key + '" value="' + value + '">';
 		});
@@ -20,7 +20,7 @@ jQuery( function ( $ ) {
 			currency: flw_payment_args.currency,
 			payment_options: flw_payment_args.payment_options,
 			redirect_url: flw_payment_args.redirect_url,
-			onclose: function () {
+			onclose: () => {
 				$.unblockUI();
 				if (payment_made) {
 					$.blockUI({message: '<p> confirming transaction ...</p>'});
@@ -31,7 +31,7 @@ jQuery( function ( $ ) {
 				}
 			},
 			callback: function (response) {
-				let tr = response.tx_ref;
+				const tr = response.tx_ref;
 				if ( 'successful' === response.status ) {
 					payment_made = true;
 					$.blockUI({message: '<p> confirming transaction ...</p>'});
@@ -54,6 +54,6 @@ jQuery( function ( $ ) {
 			},
 		}
 	}
-	let payload = processData();
-	let x = window.FlutterwaveCheckout(payload);
+	const payload = processData();
+	const x = window.FlutterwaveCheckout(payload);
 } );
