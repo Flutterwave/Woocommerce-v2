@@ -101,7 +101,6 @@
 		"dotenv": "^16.0.3",
 		"rimraf": "^5.0.0",
 		"uglify-js": "^3.17.4",
-		"vitepress": "^1.0.0-alpha.61",
 		"webpack": "^5.76.3",
 		"webpack-cli": "^5.0.1",
 		"wp-textdomain": "^1.0.1"
@@ -111,7 +110,6 @@
 		"@wordpress/html-entities": "^4.31.0",
 		"@wordpress/i18n": "^6.4.0",
 		"eslint-plugin-jsdoc": "^60.2.0",
-		"flutterwave-react-v3": "^1.3.0",
 		"gridicons": "^3.4.2"
 	}
 }
