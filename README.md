@@ -6,7 +6,7 @@
 
 ## Introduction
 
-The WooCommerce Plugin makes it very easy and quick to add Flutterwave Payment option on Checkout for your online store. Accept Credit card, Debit card and Bank account payment directly on your store with the Rave payment gateway for WooCommerce.
+The WooCommerce Plugin makes it very easy and quick to add the Flutterwave Payment option on Checkout for your online store. Accept Credit card, Debit card, and Bank account payments directly on your store with the Rave payment gateway for WooCommerce.
 
 Available features include:
 
@@ -30,8 +30,7 @@ Available features include:
 
 ## Requirements
 
-1. Flutterwave for business [API Keys](https://developer.flutterwave.com/docs/integration-guides/authentication)
-2. [WooCommerce](https://woocommerce.com/)
+1. Flutterwave for business [API Keys](https://flutterwave.com/tz/support/my-account/getting-your-api-keys)
 6. Supported PHP version: 5.6.0 - 8.1.0
 
 
@@ -43,9 +42,9 @@ To install the plugin, you need to first clone the repository from [GitHub](http
 
 ### Automatic Installation
 
-- Login to your WordPress Dashboard.
+- Log in to your WordPress Dashboard.
 - Click on "Plugins > Add New" from the left menu.
-- In the search box type **Flutterwave Woocommerce**.
+- In the search box, type **Flutterwave Woocommerce**.
 - Click on **Install Now** on **Flutterwave WooCommerce** to install the plugin on your site.
 - Confirm the installation.
 - Activate the plugin.
@@ -56,7 +55,7 @@ To install the plugin, you need to first clone the repository from [GitHub](http
 ### Manual Installation
 
 - Download the plugin zip file.
-- Login to your WordPress Admin. Click on "Plugins > Add New" from the left menu.
+- Log in to your WordPress Admin. Click on "Plugins > Add New" from the left menu.
 - Click on the "Upload" option, then click "Choose File" to select the zip file you downloaded. Click "OK" and "Install Now" to complete the installation.
 - Activate the plugin.
 - Click on "WooCommerce > Settings" from the left menu and click the **"Payments"** tab.
@@ -69,13 +68,13 @@ For FTP manual installation, [check here](https://wordpress.org/documentation/ar
 
 - When in doubt about a transaction, always check the Flutterwave Dashboard to confirm the status of a transaction.
 - Always ensure you keep your API keys securely and privately. Do not share with anyone.
-- Ensure you change from the default secret hash on the Wordpress admin and apply same on the Flutterwave Dashboard.
+- Ensure you change from the default secret hash on the WordPress admin and apply the same on the Flutterwave Dashboard.
 - Always ensure you install the most recent version of the Flutterwave WooCommerce plugin.
 
 
 ## Debugging Errors
 
-We understand that you may run into some errors while integrating our plugin. You can read more about our error messages [here](https://developer.flutterwave.com/docs/integration-guides/errors).
+We understand that you may run into some errors while integrating our plugin. You can read more about our error messages [here](https://flutterwave.com/gb/support/general/common-transaction-errors).
 
 For `authorization` and `validation` error responses, double-check your API keys and request. If you get a `server` error, kindly engage the team for support.
 
