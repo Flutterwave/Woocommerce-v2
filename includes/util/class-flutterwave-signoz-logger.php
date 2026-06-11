@@ -68,6 +68,8 @@ final class Flutterwave_Signoz_Logger {
 	}
 
 	/**
+	 * Get the current Flutterwave WooCommerce settings.
+	 *
 	 * @return array
 	 */
 	public function get_settings(): array {
@@ -168,6 +170,8 @@ final class Flutterwave_Signoz_Logger {
 	}
 
 	/**
+	 * Get the current environment.
+	 *
 	 * @return string
 	 */
 	public function get_current_environment(): string {
@@ -181,6 +185,7 @@ final class Flutterwave_Signoz_Logger {
 	 * @param string $method Payment method (e.g. "card").
 	 * @param string $reference Transaction reference (tx_ref).
 	 * @param string $path Request path (e.g. "/v3/charges").
+	 * @param null   $logger Log to the wc logger instance for flutterwave woocoomerce.
 	 * @return void
 	 */
 	public function track_request_sent( string $method, string $reference, string $path, $logger = null ): void {

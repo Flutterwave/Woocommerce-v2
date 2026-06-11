@@ -236,5 +236,3 @@ class FLW_WC_Payment_Gateway_Event_Handler implements FLW_WC_Payment_Gateway_Eve
 		// TODO: Save the event data to clients database.
 	}
 }
-
-

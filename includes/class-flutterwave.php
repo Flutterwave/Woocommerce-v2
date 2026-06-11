@@ -214,6 +214,5 @@ final class Flutterwave {
 		array_unshift( $links, "<a title='Flutterwave Settings Page' href='$rave_settings_url'>Settings</a>" );
 
 		return $links;
-
 	}
 }

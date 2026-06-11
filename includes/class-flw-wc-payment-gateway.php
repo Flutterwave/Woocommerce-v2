@@ -220,7 +220,6 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'send_app_created_event' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ) );
-
 	}
 
 	/**
@@ -408,7 +407,6 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 			),
 
 		);
-
 	}
 
 	/**
@@ -443,7 +441,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return array|void
 	 */
 	public function process_redirect_payments( $order_id ) {
-		include_once dirname( __FILE__ ) . '/client/class-flw-wc-payment-gateway-request.php';
+		include_once __DIR__ . '/client/class-flw-wc-payment-gateway-request.php';
 
 		$order = wc_get_order( $order_id );
 
@@ -506,7 +504,6 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway {
 				);
 			}
 		}
-
 	}
 
 	/**
