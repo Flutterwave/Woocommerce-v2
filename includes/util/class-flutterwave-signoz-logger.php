@@ -199,6 +199,12 @@ final class Flutterwave_Signoz_Logger {
 			'reference'       => $reference,
 		);
 
+		$cache_key = 'signoz_event:request_sent:' . md5( wp_json_encode( $payload ) );
+
+		if ( get_transient( $cache_key ) ) {
+			return; // Already sent recently.
+		}
+
 		if ( ! is_null( $logger ) ) {
 			$logger->info( 'request.sent: ' . wp_json_encode( $payload ) );
 		}
@@ -207,6 +213,8 @@ final class Flutterwave_Signoz_Logger {
 			'request.sent',
 			$payload
 		);
+
+		set_transient( $cache_key, true, 300 ); // 5 minute TTL.
 	}
 
 	/**

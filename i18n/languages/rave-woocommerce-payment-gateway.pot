@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-11T09:27:51+00:00\n"
+"POT-Creation-Date: 2026-06-11T10:03:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rave-woocommerce-payment-gateway\n"
@@ -386,19 +386,27 @@ msgstr ""
 msgid "Install WooCommerce"
 msgstr ""
 
+#: build/index.js:1
 #: client/blocks/payment-method/index.js:19
+#: build/index.js:102
 msgid "You may be redirected to a secure page to complete your payment."
 msgstr ""
 
+#: build/index.js:1
 #: client/blocks/payment-method/index.js:32
+#: build/index.js:115
 msgid "Flutterwave"
 msgstr ""
 
+#: build/index.js:1
 #: client/blocks/payment-method/index.js:38
+#: build/index.js:121
 msgid "Proceed to Flutterwave"
 msgstr ""
 
+#: build/index.js:1
 #: client/blocks/payment-method/index.js:44
+#: build/index.js:127
 msgid "Payment via Flutterwave"
 msgstr ""
 
