@@ -28,7 +28,7 @@ if ( ! defined( 'FLUTTERWAVEACCESS' ) ) {
 class FLW_WC_Payment_Gateway_Subscriptions extends FLW_WC_Payment_Gateway {
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public function __construct() {
 
