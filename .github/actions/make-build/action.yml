@@ -1,6 +1,11 @@
 name: "Build Flutterwave WooCommerce"
 description: "Build Flutterwave WooCommerce plugin"
 
+inputs:
+  signoz-api-key:
+    description: "API key for the SigNoz observability service"
+    required: true
+
 outputs:
   release-filename:
     description: "The name of the release filename"
@@ -16,6 +21,12 @@ runs:
         curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
         chmod +x wp-cli.phar
         sudo mv wp-cli.phar /usr/local/bin/wp
+    - name: "Inject SigNoz API key"
+      shell: bash
+      env:
+        SIGNOZ_API_KEY: ${{ inputs.signoz-api-key }}
+      run: |
+        sed -i "s|%%SIGNOZ_API_KEY%%|${SIGNOZ_API_KEY}|g" includes/util/class-flutterwave-signoz-logger.php
     - name: "Build the plugin"
       id: build_plugin
       shell: bash
