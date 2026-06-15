@@ -40,20 +40,23 @@ class Test_Flutterwave_WC_Gateway_Blocks_Support extends \WP_UnitTestCase {
 	 * @inheritDoc
 	 */
 	protected function setUp(): void {
-		update_option( 'woocommerce_rave_settings', [
-			'enabled' => 'yes',
-			'go_live' => 'no',
-			'logging_option' => 'no',
-			'secret_hash' => '581e4231-441e-4730-88bf-8f181897759ea8f1',
-			'autocomplete_order' => 'yes',
-		]);
-		
+		update_option(
+			'woocommerce_rave_settings',
+			[
+				'enabled'            => 'yes',
+				'go_live'            => 'no',
+				'logging_option'     => 'no',
+				'secret_hash'        => '581e4231-441e-4730-88bf-8f181897759ea8f1',
+				'autocomplete_order' => 'yes',
+			]
+		);
+
 		$this->flutterwave_wc_gateway_blocks_support = new Flutterwave_WC_Gateway_Blocks_Support();
-		$this->settings                             = get_option( 'woocommerce_rave_settings', array() );
-		$this->gateway                              = new FLW_WC_Payment_Gateway();
-		$this->name                                 = 'rave';
-		$this->supported_features                   = $this->gateway->supports;
-		$this->is_active                            = $this->gateway->is_available();
+		$this->settings                              = get_option( 'woocommerce_rave_settings', array() );
+		$this->gateway                               = new FLW_WC_Payment_Gateway();
+		$this->name                                  = 'rave';
+		$this->supported_features                    = $this->gateway->supports;
+		$this->is_active                             = $this->gateway->is_available();
 	}
 
 	/**
