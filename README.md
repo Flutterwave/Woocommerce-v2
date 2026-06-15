@@ -32,14 +32,14 @@ Available features include:
 
 1. Flutterwave for business [API Keys](https://developer.flutterwave.com/docs/integration-guides/authentication)
 2. [WooCommerce](https://woocommerce.com/)
-6. Supported PHP version: 5.6.0 - 8.1.0
+6. Supported PHP version: >= 7.4.0
 
 
 ## Installation
 
 ### Github Zip Download
 
-To install the plugin, you need to first clone the repository from [GitHub](https://github.com/Flutterwave/WooCommerce) and then upload the folder to your WordPress plugins directory. For WooCommerce Blocks support, you would need to build block assets by running the command `npm install && npm run build:webpack`.
+To install the plugin, first clone the repository from [GitHub](https://github.com/Flutterwave/WooCommerce), then upload the folder to your WordPress plugins directory. For WooCommerce Blocks support, you would need to build block assets by running the command `npm install && npm run build:webpack`.
 
 ### Automatic Installation
 
