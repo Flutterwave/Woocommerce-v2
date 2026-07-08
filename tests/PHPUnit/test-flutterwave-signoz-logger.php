@@ -337,6 +337,39 @@ class Test_Flutterwave_Signoz_Logger extends \WP_UnitTestCase {
         $this->assertEquals( 'sandbox', $this->captured_requests[0]['body']['data']['environment'] );
     }
 
+    public function test_track_request_sent_generates_trace_context_for_reference(): void {
+        $this->mock_merchant_api( 'Merchant' );
+        $this->logger->init( 'FLWPUBK-test-key', 'production' );
+        $this->capture_signoz_requests();
+
+        $this->logger->track_request_sent( 'card', 'txn-ref-123', '/v3/charges' );
+
+        $data = $this->captured_requests[0]['body']['data'];
+        $this->assertArrayHasKey( 'trace_context', $data );
+        $this->assertTrue( ctype_xdigit( $data['trace_context']['trace_id'] ) );
+        $this->assertTrue( ctype_xdigit( $data['trace_context']['span_id'] ) );
+        $this->assertEquals( 32, strlen( $data['trace_context']['trace_id'] ) );
+        $this->assertEquals( 16, strlen( $data['trace_context']['span_id'] ) );
+    }
+
+    public function test_track_request_sent_links_spans_for_same_reference(): void {
+        $this->mock_merchant_api( 'Merchant' );
+        $this->logger->init( 'FLWPUBK-test-key', 'production' );
+        $this->capture_signoz_requests();
+
+        $this->logger->track_request_sent( 'card', 'txn-ref-123', '/v3/charges' );
+        delete_transient( 'flw_signoz_req_' . md5( 'txn-ref-123' ) );
+        $this->logger->track_request_sent( 'card', 'txn-ref-123', '/v3/charges' );
+
+        $this->assertCount( 2, $this->captured_requests );
+        $first_context  = $this->captured_requests[0]['body']['data']['trace_context'];
+        $second_context = $this->captured_requests[1]['body']['data']['trace_context'];
+
+        $this->assertSame( $first_context['trace_id'], $second_context['trace_id'] );
+        $this->assertSame( $first_context['span_id'], $second_context['parent_span_id'] );
+        $this->assertNotSame( $first_context['span_id'], $second_context['span_id'] );
+    }
+
     // =========================================================================
     // track_transaction()
     // =========================================================================

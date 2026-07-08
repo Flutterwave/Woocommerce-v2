@@ -274,21 +274,117 @@ final class Flutterwave_Signoz_Logger {
 
 	/**
 	 * Resolve the trace context for an event: explicit > default > by-reference.
+	 * When no context is available for the reference, create a new root span.
+	 * When a context already exists for the reference, create a child span
+	 * under the prior one so the trace remains linked by tx_ref.
 	 *
 	 * @param array|null $explicit  Trace context passed directly by the caller.
 	 * @param string     $reference Transaction reference (tx_ref).
 	 * @return array|null
 	 */
 	private function resolve_trace_context( ?array $explicit, string $reference ): ?array {
-		if ( null !== $explicit ) {
-			return $explicit;
+		$parent_context = $explicit;
+		if ( null === $parent_context ) {
+			$parent_context = $this->default_trace_context;
+		}
+		if ( null === $parent_context ) {
+			$parent_context = $this->get_trace_context_for_reference( $reference );
 		}
 
-		if ( null !== $this->default_trace_context ) {
-			return $this->default_trace_context;
+		$context = $this->build_trace_context( $reference, $parent_context );
+		$this->set_trace_context_for_reference( $reference, $context );
+		return $context;
+	}
+
+	/**
+	 * Build a trace context for a reference.
+	 *
+	 * @param string     $reference      Transaction reference (tx_ref).
+	 * @param array|null $parent_context Optional parent trace context.
+	 * @return array
+	 */
+	private function build_trace_context( string $reference, ?array $parent_context = null ): array {
+		$trace_id = $this->generate_trace_id();
+		$span_id  = $this->generate_span_id();
+		$context  = array(
+			'trace_id' => $trace_id,
+			'span_id'  => $span_id,
+		);
+
+		if ( null !== $parent_context ) {
+			$context['trace_id'] = $this->extract_trace_id( $parent_context ) ?? $trace_id;
+			if ( '' !== ( $this->extract_span_id( $parent_context ) ?? '' ) ) {
+				$context['parent_span_id'] = $this->extract_span_id( $parent_context );
+			}
 		}
 
-		return $this->get_trace_context_for_reference( $reference );
+		return $context;
+	}
+
+	/**
+	 * Generate a unique hex trace id.
+	 *
+	 * @return string
+	 */
+	private function generate_trace_id(): string {
+		try {
+			return bin2hex( random_bytes( 16 ) );
+		} catch ( \Throwable $e ) {
+			unset( $e );
+			return substr( md5( uniqid( '', true ) ), 0, 32 );
+		}
+	}
+
+	/**
+	 * Generate a unique hex span id.
+	 *
+	 * @return string
+	 */
+	private function generate_span_id(): string {
+		try {
+			return bin2hex( random_bytes( 8 ) );
+		} catch ( \Throwable $e ) {
+			unset( $e );
+			return substr( md5( uniqid( '', true ) . microtime( true ) ), 0, 16 );
+		}
+	}
+
+	/**
+	 * Extract the trace id from a trace context array.
+	 *
+	 * @param array $context Trace context.
+	 * @return string|null
+	 */
+	private function extract_trace_id( array $context ): ?string {
+		if ( isset( $context['trace_id'] ) && is_string( $context['trace_id'] ) && '' !== trim( $context['trace_id'] ) ) {
+			return $context['trace_id'];
+		}
+
+		if ( isset( $context['traceparent'] ) && is_string( $context['traceparent'] ) ) {
+			$parts = explode( '-', $context['traceparent'] );
+			return $parts[1] ?? null;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Extract the span id from a trace context array.
+	 *
+	 * @param array $context Trace context.
+	 * @return string|null
+	 */
+	private function extract_span_id( array $context ): ?string {
+		if ( isset( $context['span_id'] ) && is_string( $context['span_id'] ) && '' !== trim( $context['span_id'] ) ) {
+			return $context['span_id'];
+		}
+
+		if ( isset( $context['traceparent'] ) && is_string( $context['traceparent'] ) ) {
+			$parts = explode( '-', $context['traceparent'] );
+			return $parts[2] ?? null;
+		}
+
+		return null;
 	}
 
 	/**
