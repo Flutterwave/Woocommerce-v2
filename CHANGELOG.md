@@ -1,4 +1,7 @@
 # Changelog
+## 3.3.0 | 21-07-2026
+- [ADDED] Update the signoz service to take traces and spans.
+- [ADDED] Support for PHP 8.2 - 8.4
 ## 3.2.0 | 15-06-2026
 Signoz implementation for service reliability.
 
