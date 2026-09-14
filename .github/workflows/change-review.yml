@@ -19,7 +19,7 @@ concurrency:
 jobs:
   generate-wc-compat-matrix:
     name: "Generate the matrix for woocommerce compatibility dynamically"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate_matrix.outputs.matrix }}
     steps:
