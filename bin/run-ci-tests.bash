@@ -8,7 +8,7 @@ IFS=$'\n\t'
 WOOCOMMERCE_RAVE_DIR="$GITHUB_WORKSPACE"
 
 echo 'Updating composer version & Install dependencies...'
-composer self-update 2.0.6 && composer install --no-progress
+composer install --no-progress
 
 echo 'Starting MySQL service...'
 sudo systemctl start mysql.service
