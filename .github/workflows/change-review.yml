@@ -33,7 +33,7 @@ jobs:
   woocommerce-compatibility:
     name: "WC compatibility"
     needs: generate-wc-compat-matrix
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
       WP_VERSION: ${{ matrix.wordpress }}
       WC_VERSION: ${{ matrix.woocommerce }}
