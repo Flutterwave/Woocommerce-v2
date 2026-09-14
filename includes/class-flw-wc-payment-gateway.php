@@ -27,12 +27,16 @@ require_once __DIR__ . '/client/class-flw-wc-payment-gateway-request.php';
 require_once __DIR__ . '/client/class-flw-wc-payment-gateway-sdk.php';
 require_once __DIR__ . '/util/class-flutterwave-logger.php';
 require_once __DIR__ . '/util/class-flutterwave-signoz-logger.php';
+require_once __DIR__ . '/util/class-flutterwave-callback.php';
+require_once __DIR__ . '/util/class-flutterwave-crypto.php';
 
 use Flutterwave\WooCommerce\Client\Flw_WC_Payment_Gateway_Request;
 use Flutterwave\WooCommerce\Client\FLW_WC_Payment_Gateway_Sdk as FlwSdk;
 use FLW_WC_Payment_Gateway_Event_Handler as FlwEventHandler;
 use Flutterwave\WooCommerce\Util\Flutterwave_Logger;
 use Flutterwave\WooCommerce\Util\Flutterwave_Signoz_Logger;
+use Flutterwave\WooCommerce\Util\Flutterwave_Callback;
+use Flutterwave\WooCommerce\Util\Flutterwave_Crypto;
 
 /**
  * Main Flutterwave Gateway Class
@@ -442,11 +446,13 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 		// For inline Checkout.
 		$order = wc_get_order($order_id);
 
-		$custom_nonce = wp_create_nonce();
+		// Scoped to this order so the pay page cannot be satisfied by a nonce
+		// minted for anything else on the site.
+		$custom_nonce = wp_create_nonce('flw_pay_order_' . $order->get_id());
 
 		return array(
 			'result' => 'success',
-			'redirect' => $order->get_checkout_payment_url(true) . "&_wpnonce=$custom_nonce",
+			'redirect' => add_query_arg('_wpnonce', $custom_nonce, $order->get_checkout_payment_url(true)),
 		);
 	}
 
@@ -481,8 +487,10 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 		}
 
 		$flutterwave_request['payment_options'] = $this->payment_options;
-		$custom_nonce = wp_create_nonce();
-		$flutterwave_request['redirect_url'] = $flutterwave_request['redirect_url'] . '&_wpnonce=' . $custom_nonce;
+
+		// Recorded only for references we actually issued, so the callback can
+		// reject a reference minted for some other order.
+		Flutterwave_Callback::record_txn_ref($order, $flutterwave_request['tx_ref']);
 
 		$sdk = $this->sdk->set_event_handler(new FlwEventHandler($order));
 
@@ -545,37 +553,32 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 	public function payment_scripts()
 	{
 
-		// Load only on checkout page.
-		if (!is_checkout_pay_page() && !isset($_GET['key'])) {
+		// Load only on the order pay page.
+		if (!is_checkout_pay_page() || !isset($_GET['key'], $_REQUEST['_wpnonce'])) {
 			return;
 		}
 
-		if (!isset($_REQUEST['_wpnonce'])) {
-			return;
-		}
-
-		$expiry_message = sprintf(
-			/* translators: %s: shop cart url */
-			__('Sorry, your session has expired. <a href="%s" class="wc-backward">Return to shop</a>', 'rave-woocommerce-payment-gateway'),
-			esc_url(wc_get_page_permalink('shop'))
-		);
-
-		$nonce_value = sanitize_text_field(wp_unslash($_REQUEST['_wpnonce']));
-
-		$order_key = urldecode(sanitize_text_field(wp_unslash($_GET['key'])));
+		$order_key = sanitize_text_field(wp_unslash($_GET['key']));
 		$order_id = absint(get_query_var('order-pay'));
-
 		$order = wc_get_order($order_id);
 
-		if (empty($nonce_value) || !wp_verify_nonce($nonce_value)) {
-
-			WC()->session->set('refresh_totals', true);
-			wc_add_notice(__('We were unable to process your order, please try again.', 'rave-woocommerce-payment-gateway'));
-			wp_safe_redirect($order->get_cancel_order_url());
+		if (!$order instanceof WC_Order) {
 			return;
 		}
 
 		if ($this->id !== $order->get_payment_method()) {
+			return;
+		}
+
+		$nonce_value = sanitize_text_field(wp_unslash($_REQUEST['_wpnonce']));
+
+		// Tied to this specific order rather than validated against the default
+		// action, so a nonce minted anywhere else on the site does not satisfy it.
+		if (!wp_verify_nonce($nonce_value, 'flw_pay_order_' . $order_id)) {
+
+			WC()->session->set('refresh_totals', true);
+			wc_add_notice(__('We were unable to process your order, please try again.', 'rave-woocommerce-payment-gateway'));
+			wp_safe_redirect($order->get_cancel_order_url());
 			return;
 		}
 
@@ -592,16 +595,18 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 
 		$payment_args = array();
 
-		if (is_checkout_pay_page() && get_query_var('order-pay')) {
+		if (get_query_var('order-pay')) {
 
-			$email = $order->get_billing_email();
-			$amount = $order->get_total();
+			$the_order_key = (string) $order->get_order_key();
+
+			// The order key is the secret that proves this browser is entitled to
+			// pay this order. Nothing is handed to the checkout script without it.
+			if ($order->get_id() !== $order_id || '' === $the_order_key || !hash_equals($the_order_key, $order_key)) {
+				wp_localize_script('flutterwave_js', 'flw_payment_args', $payment_args);
+				return;
+			}
+
 			$txnref = 'WOOC_' . $order_id . '_' . time();
-			$the_order_id = $order->get_id();
-			$the_order_key = $order->get_order_key();
-			$currency = $order->get_currency();
-			$custom_nonce = wp_create_nonce();
-			$redirect_url = '';
 
 			$this->signoz_logger->track_request_sent(
 				'GET',
@@ -609,55 +614,27 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 				'/inline'
 			);
 
-			$flutterwave_woo_url = WC()->api_request_url('FLW_WC_Payment_Gateway');
+			$payment_args['email'] = $order->get_billing_email();
+			$payment_args['amount'] = $order->get_total();
+			$payment_args['tx_ref'] = $txnref;
+			$payment_args['currency'] = $order->get_currency();
+			$payment_args['public_key'] = $this->public_key;
+			$payment_args['redirect_url'] = Flutterwave_Callback::build_url($order);
+			$payment_args['payment_options'] = $this->payment_options;
+			$payment_args['phone_number'] = $order->get_billing_phone();
+			$payment_args['first_name'] = $order->get_billing_first_name();
+			$payment_args['last_name'] = $order->get_billing_last_name();
+			$payment_args['consumer_id'] = $order->get_customer_id();
+			$payment_args['ip_address'] = $order->get_customer_ip_address();
+			$payment_args['title'] = esc_html__('Order Payment', 'rave-woocommerce-payment-gateway');
+			$payment_args['description'] = 'Payment for Order: ' . $order_id;
+			$payment_args['logo'] = wp_get_attachment_url(get_theme_mod('custom_logo'));
+			$payment_args['checkout_url'] = wc_get_checkout_url();
+			$payment_args['cancel_url'] = $order->get_cancel_order_url();
 
-			// Parse the base URL to check for existing query parameters.
-			$url_parts = wp_parse_url($flutterwave_woo_url);
-
-			// If the base URL already has query parameters, merge them with new ones.
-			if (isset($url_parts['query'])) {
-				// Convert the query string to an array.
-				parse_str($url_parts['query'], $query_array);
-
-				// Add the new parameters to the existing query array.
-				$query_array['order_id'] = $order_id;
-
-				// Rebuild the query string with the new parameters.
-				$new_query_string = http_build_query($query_array);
-
-				// Rebuild the final URL with the new query string.
-				$redirect_url = $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] . '?' . $new_query_string;
-			} else {
-				// If no existing query parameters, simply append the new ones.
-				$redirect_url = add_query_arg(
-					array(
-						'order_id' => $order_id,
-						'_wpnonce' => $custom_nonce,
-					),
-					$flutterwave_woo_url
-				);
-			}
-
-			if ($the_order_id === $order_id && $the_order_key === $order_key) {
-				$payment_args['email'] = $email;
-				$payment_args['amount'] = $amount;
-				$payment_args['tx_ref'] = $txnref;
-				$payment_args['currency'] = $currency;
-				$payment_args['public_key'] = $this->public_key;
-				$payment_args['redirect_url'] = $redirect_url;
-				$payment_args['payment_options'] = $this->payment_options;
-				$payment_args['phone_number'] = $order->get_billing_phone();
-				$payment_args['first_name'] = $order->get_billing_first_name();
-				$payment_args['last_name'] = $order->get_billing_last_name();
-				$payment_args['consumer_id'] = $order->get_customer_id();
-				$payment_args['ip_address'] = $order->get_customer_ip_address();
-				$payment_args['title'] = esc_html__('Order Payment', 'rave-woocommerce-payment-gateway');
-				$payment_args['description'] = 'Payment for Order: ' . $order_id;
-				$payment_args['logo'] = wp_get_attachment_url(get_theme_mod('custom_logo'));
-				$payment_args['checkout_url'] = wc_get_checkout_url();
-				$payment_args['cancel_url'] = $order->get_cancel_order_url();
-			}
-			update_post_meta($order_id, '_flw_payment_txn_ref', $txnref);
+			// Recorded only for references we actually issued, so the callback can
+			// reject a reference minted for some other order.
+			Flutterwave_Callback::record_txn_ref($order, $txnref);
 		}
 		wp_localize_script('flutterwave_js', 'flw_payment_args', $payment_args);
 	}
@@ -665,46 +642,86 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 	/**
 	 * Verify payment made on the checkout page.
 	 *
+	 * This runs on `?wc-api=flw_wc_payment_gateway`, a public endpoint with no
+	 * authenticated session behind it - the customer arrives here from
+	 * Flutterwave. Every decision below therefore has to be justified by
+	 * something the caller had to already know (the order key) or by an answer
+	 * from Flutterwave itself. Nothing the caller merely asserts, such as
+	 * `status=cancelled`, is allowed to change an order on its own.
+	 *
 	 * @return void
 	 */
 	public function flw_verify_payment()
 	{
-		$sdk = $this->sdk;
+		$txn_ref = Flutterwave_Callback::param('tx_ref');
+		$status = Flutterwave_Callback::param('status');
 
-		if (!isset($_GET['_wpnonce']) && !wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])))) {
-			if (isset($_GET['status']) && 'cancelled' === $_GET['status']) {
-				$this->logger->info('transaction cancelled by the customer.');
-				// $sdk->set_event_handler(new FlwEventHandler($order))->cancel_payment($txn_ref);
-				header('Location: ' . wc_get_cart_url());
-				die();
-			}
-		}
+		$order = Flutterwave_Callback::resolve_order($txn_ref);
 
-		if (isset($_POST['tx_ref']) || isset($_GET['tx_ref'])) {
-			$txn_ref = urldecode(sanitize_text_field(wp_unslash($_GET['tx_ref']))) ?? sanitize_text_field(wp_unslash($_POST['tx_ref']));
-			$o = explode('_', sanitize_text_field($txn_ref));
-			$order_id = intval($o[1]);
-			$order = wc_get_order($order_id);
-
-			if (isset($_GET['status']) && 'cancelled' === $_GET['status']) {
-				$this->logger->info('transaction cancelled by the customer.');
-				$sdk->set_event_handler(new FlwEventHandler($order))->cancel_payment($txn_ref);
-				header('Location: ' . wc_get_cart_url());
-				die();
-			}
-
-			Flutterwave_Signoz_Logger::instance()->track_request_sent(
-				'GET',
-				$txn_ref,
-				'/transactions/verify_by_reference?tx_ref='
+		if (!$order instanceof WC_Order) {
+			// resolve_order() has already logged why.
+			$this->signoz_logger->track_error(
+				'CALLBACK_REJECTED',
+				'Payment callback could not be bound to an order it is authorised for.',
+				$txn_ref
 			);
-
-			$sdk->set_event_handler(new FlwEventHandler($order))->requery_transaction($txn_ref);
-
-			$redirect_url = $this->get_return_url($order);
-			header('Location: ' . $redirect_url);
-			die();
+			wp_safe_redirect(wc_get_cart_url());
+			exit;
 		}
+
+		if ($this->id !== $order->get_payment_method()) {
+			$this->logger->info('Payment callback rejected: order ' . $order->get_id() . ' is not paid for with Flutterwave.');
+			wp_safe_redirect(wc_get_cart_url());
+			exit;
+		}
+
+		if ('' === $txn_ref) {
+			// Nothing to confirm with Flutterwave. Send the customer somewhere
+			// sensible without touching the order.
+			$this->logger->info('Payment callback for order ' . $order->get_id() . ' carried no transaction reference.');
+			wp_safe_redirect('cancelled' === $status ? wc_get_cart_url() : $this->get_return_url($order));
+			exit;
+		}
+
+		if (!Flutterwave_Callback::txn_ref_belongs_to_order($order, $txn_ref)) {
+			$this->signoz_logger->track_error(
+				'CALLBACK_REFERENCE_MISMATCH',
+				'Payment callback presented a transaction reference issued for a different order.',
+				$txn_ref
+			);
+			wp_safe_redirect($this->get_return_url($order));
+			exit;
+		}
+
+		// Already settled by an earlier callback or by the webhook. Repeat
+		// callbacks are common (refresh, back button) and must be inert.
+		if (!Flutterwave_Callback::order_awaiting_payment($order)) {
+			$this->logger->info('Payment callback ignored: order ' . $order->get_id() . ' is already ' . $order->get_status() . '.');
+			wp_safe_redirect($this->get_return_url($order));
+			exit;
+		}
+
+		$sdk = $this->sdk->set_event_handler(new FlwEventHandler($order));
+
+		if ('cancelled' === $status) {
+			$this->logger->info('Customer reported transaction ' . $txn_ref . ' as cancelled. Confirming with Flutterwave before updating the order.');
+			// cancel_payment() re-queries Flutterwave first; a payment that
+			// actually went through is never cancelled on the customer's say-so.
+			$sdk->cancel_payment($txn_ref);
+			wp_safe_redirect(wc_get_cart_url());
+			exit;
+		}
+
+		Flutterwave_Signoz_Logger::instance()->track_request_sent(
+			'GET',
+			$txn_ref,
+			'/transactions/verify_by_reference?tx_ref='
+		);
+
+		$sdk->requery_transaction($txn_ref);
+
+		wp_safe_redirect($this->get_return_url($order));
+		exit;
 	}
 
 	/**
@@ -732,9 +749,26 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 			exit();
 		}
 
-		$local_signature = $this->get_option('secret_hash');
+		$local_signature = (string) $this->get_option('secret_hash');
 
-		if ($signature !== $local_signature) {
+		if ('' === $local_signature) {
+			$this->logger->error('A webhook arrived but no secret hash is configured, so it cannot be authenticated. Set one in the Flutterwave settings.');
+			$this->signoz_logger->track_error(
+				'WEBHOOK_SECRET_HASH_MISSING',
+				'Webhook rejected because the store has no secret hash configured.'
+			);
+			wp_send_json(
+				array(
+					'status' => 'error',
+					'message' => 'Webhook is not configured on this store',
+				),
+				WP_Http::UNAUTHORIZED
+			);
+		}
+
+		// hash_equals() so the comparison does not leak the secret through its
+		// running time the way a byte-wise !== does.
+		if (!hash_equals($local_signature, $signature)) {
 			$this->logger->info('Faudulent Webhook Notification Attempt [Access Restricted]');
 			$this->signoz_logger->track_error(
 				'WEBHOOK_SIGNATURE_MISMATCH',
@@ -750,8 +784,18 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 		}
 
 		http_response_code(200);
-		$this->logger->info('Webhook recieved: ' . $event);
 		$event = json_decode($event);
+
+		// The raw body carries customer PII and payment metadata, so it only goes
+		// to the log file when the merchant has explicitly turned logging on.
+		if (self::$log_enabled) {
+			$this->logger->debug('Webhook received: ' . wp_json_encode($event));
+		} else {
+			$this->logger->info(
+				'Webhook received: ' . sanitize_text_field((string) ($event->event ?? 'unknown')) .
+				' for ' . sanitize_text_field((string) ($event->data->tx_ref ?? 'unknown reference'))
+			);
+		}
 
 		if (empty($event->event) && empty($event->data)) {
 			$this->signoz_logger->track_error(
@@ -785,7 +829,7 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 			$event_data = $event->data;
 
 			// check if transaction reference starts with WOOC on hpos enabled.
-			if (substr($event_data->tx_ref, 0, 4) !== 'WOOC') {
+			if (0 !== strpos((string) ($event_data->tx_ref ?? ''), 'WOOC')) {
 				$this->logger->info('Attempt to verifiy a transaction not produced by the merchants store.');
 				wp_send_json(
 					array(
@@ -796,12 +840,12 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 				);
 			}
 
-			$txn_ref = sanitize_text_field($event_data->tx_ref);
+			$txn_ref = sanitize_text_field((string) $event_data->tx_ref);
 			$o = explode('_', $txn_ref);
-			$order_id = intval($o[1]);
-			$order = wc_get_order($order_id);
+			$order_id = isset($o[1]) ? absint($o[1]) : 0;
+			$order = $order_id > 0 ? wc_get_order($order_id) : false;
 
-			if (!$order) {
+			if (!$order instanceof WC_Order) {
 				$this->signoz_logger->track_error(
 					'INVALID_ORDER_REFERENCE_FROM_WEBHOOK',
 					'Webhook sent an invalid order reference. No order found with ID: ' . $order_id,
@@ -834,6 +878,18 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 				// TODO: add timeline to order notes to brief merchant as to why the order status changed.
 				$statuses_in_question[] = 'failed';
 			}
+			if (Flutterwave_Callback::may_recover_cancelled_order($order, $event_data, $this->id)) {
+				// The customer cancelled (or the order was cancelled while the
+				// charge was still pending) but Flutterwave went on to take the
+				// money. Rejecting here would leave them charged with nothing
+				// shipped. requery_transaction() below still confirms the charge
+				// with Flutterwave before the order is completed.
+				$statuses_in_question[] = 'cancelled';
+				$order->add_order_note(
+					esc_html__('A successful Flutterwave charge arrived for this cancelled order. Confirming it with Flutterwave before reopening the order.', 'rave-woocommerce-payment-gateway')
+				);
+				$this->logger->info('Webhook for cancelled order ' . $order->get_id() . ' reports a successful charge. Verifying before recovery.');
+			}
 			if (!in_array($current_order_status, $statuses_in_question, true)) {
 				wp_send_json(
 					array(
@@ -842,6 +898,30 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 					),
 					WP_Http::CREATED
 				);
+			}
+
+			// A valid webhook, verif-hash header included, can be captured and
+			// replayed. Recording the Flutterwave transaction id makes a replay a
+			// no-op even if the order is somehow still in a payable state.
+			$event_id = (string) ($event_data->id ?? '');
+			$seen = $order->get_meta('_flw_processed_webhook_ids', true);
+			$seen = is_array($seen) ? $seen : array();
+
+			if ('' !== $event_id && in_array($event_id, $seen, true)) {
+				$this->logger->info('Ignoring a webhook for transaction ' . $event_id . ' that has already been processed.');
+				wp_send_json(
+					array(
+						'status' => 'success',
+						'message' => 'Webhook already processed',
+					),
+					WP_Http::OK
+				);
+			}
+
+			if ('' !== $event_id) {
+				$seen[] = $event_id;
+				$order->update_meta_data('_flw_processed_webhook_ids', array_slice($seen, -20));
+				$order->save();
 			}
 
 			Flutterwave_Signoz_Logger::instance()->track_request_sent(
@@ -910,11 +990,14 @@ class FLW_WC_Payment_Gateway extends WC_Payment_Gateway
 
 			}
 
+			// This token can initiate charges on its own, so it is never written
+			// to the database in the clear.
+			$stored_token = Flutterwave_Crypto::encrypt($payment_token);
+
 			foreach ($subscriptions as $subscription) {
 
-				$subscription_id = $subscription->get_id();
-
-				update_post_meta($subscription_id, '_rave_wc_token', $payment_token);
+				$subscription->update_meta_data('_rave_wc_token', $stored_token);
+				$subscription->save();
 
 			}
 		}
