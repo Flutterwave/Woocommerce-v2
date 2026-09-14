@@ -44,9 +44,9 @@ jobs:
       matrix: ${{ fromJSON(needs.generate-wc-compat-matrix.outputs.matrix) }}
     steps:
       # clone the repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       # enable dependencies caching
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/composer/
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
@@ -60,7 +60,7 @@ jobs:
       - run: bash bin/run-ci-tests.bash
       # report to codecov
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODE_COV_TOKEN }}
           files: ./coverage.xml
@@ -92,9 +92,9 @@ jobs:
       GUTENBERG_VERSION: ${{ matrix.gutenberg }}
     steps:
       # clone the repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       # enable dependencies caching
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/composer/
           key:  ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
@@ -120,7 +120,7 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
       - name: "Validate composer.json and composer.lock"
         run: composer validate --strict
       - name: Setup PHP
@@ -131,7 +131,7 @@ jobs:
           coverage: none
           tools: cs2pr
       - name: Install Composer dependencies
-        uses: "ramsey/composer-install@v2"
+        uses: "ramsey/composer-install@v3"
       - name: Run PHPCS checks
         continue-on-error: true
         run: vendor/bin/phpcs --ignore=*/tests/*,*/data/*,*/assets/* --report-full --report-checkstyle=./phpcs-report.xml
