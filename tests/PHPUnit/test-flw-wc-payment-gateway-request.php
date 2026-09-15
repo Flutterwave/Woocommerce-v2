@@ -44,6 +44,8 @@ class Test_FLW_WC_Payment_Gateway_Request extends \WP_UnitTestCase {
 			$order->set_billing_country( 'GB' );
 			$order->set_billing_first_name( 'James' );
 			$order->set_billing_last_name( 'Bond' );
+			// The callback URL carries the order key so the return request can be authenticated.
+			$order->set_order_key( 'wc_order_test' );
 			// $order->set_customer_ip_address( $_SERVER['REMOTE_ADDR']);
 
 			$txnref = 'WOOC_'.$order->get_id().'_TEST';
@@ -76,7 +78,7 @@ class Test_FLW_WC_Payment_Gateway_Request extends \WP_UnitTestCase {
 						'tx_ref'          => $txnref,
 						'currency'        => $order->get_currency(),
 						'payment_options' => 'card',
-						'redirect_url'    => get_site_url().'/?wc-api=FLW_WC_Payment_Gateway&order_id=1',
+						'redirect_url'    => get_site_url().'/?wc-api=FLW_WC_Payment_Gateway&order_id=1&flw_order_key=wc_order_test',
 						'payload_hash'   => $hash,
 						'customer'        => [
 							'email'        => 'jbond@gmail.com',
