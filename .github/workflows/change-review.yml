@@ -56,6 +56,8 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: composer
           coverage: xdebug
+      - name: Install Subversion
+        run: sudo apt-get update && sudo apt-get install -y subversion
       # run CI checks
       - run: bash bin/run-ci-tests.bash
       # report to codecov
