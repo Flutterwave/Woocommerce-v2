@@ -19,7 +19,7 @@ concurrency:
 jobs:
   generate-wc-compat-matrix:
     name: "Generate the matrix for woocommerce compatibility dynamically"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate_matrix.outputs.matrix }}
     steps:
@@ -33,7 +33,7 @@ jobs:
   woocommerce-compatibility:
     name: "WC compatibility"
     needs: generate-wc-compat-matrix
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
       WP_VERSION: ${{ matrix.wordpress }}
       WC_VERSION: ${{ matrix.woocommerce }}
@@ -44,9 +44,9 @@ jobs:
       matrix: ${{ fromJSON(needs.generate-wc-compat-matrix.outputs.matrix) }}
     steps:
       # clone the repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       # enable dependencies caching
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/composer/
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
@@ -56,11 +56,13 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: composer
           coverage: xdebug
+      - name: Install Subversion
+        run: sudo apt-get update && sudo apt-get install -y subversion
       # run CI checks
       - run: bash bin/run-ci-tests.bash
       # report to codecov
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODE_COV_TOKEN }}
           files: ./coverage.xml
@@ -68,7 +70,7 @@ jobs:
 
   generate-wc-compat-beta-matrix:
     name: "Generate the matrix for compatibility-woocommerce-beta dynamically"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate_matrix.outputs.matrix }}
     steps:
@@ -82,7 +84,7 @@ jobs:
   compatibility-woocommerce-beta:
     name: Environment - WC beta
     needs: generate-wc-compat-beta-matrix
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.generate-wc-compat-beta-matrix.outputs.matrix) }}
@@ -92,9 +94,9 @@ jobs:
       GUTENBERG_VERSION: ${{ matrix.gutenberg }}
     steps:
       # clone the repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       # enable dependencies caching
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/composer/
           key:  ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
@@ -104,6 +106,9 @@ jobs:
           php-version: ${{ matrix.php }}
           tools:       composer
           coverage:    none
+
+      - name: Install Subversion
+        run: sudo apt-get update && sudo apt-get install -y subversion
       # Check if php version is greater than 8.0 and install phpunit 9
       - uses: ./.github/actions/check-php-version-phpunit-support
         with:
@@ -120,7 +125,7 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
       - name: "Validate composer.json and composer.lock"
         run: composer validate --strict
       - name: Setup PHP
@@ -131,7 +136,7 @@ jobs:
           coverage: none
           tools: cs2pr
       - name: Install Composer dependencies
-        uses: "ramsey/composer-install@v2"
+        uses: "ramsey/composer-install@v3"
       - name: Run PHPCS checks
         continue-on-error: true
         run: vendor/bin/phpcs --ignore=*/tests/*,*/data/*,*/assets/* --report-full --report-checkstyle=./phpcs-report.xml
