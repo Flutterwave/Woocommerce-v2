@@ -65,7 +65,7 @@ Handle Webhooks from Flutterwave with two new actions in WooCommerce.
 = Best Practices =
 1. When in doubt about a transaction, always check the Flutterwave Dashboard to confirm the status of a transaction.
 2. Always ensure you keep your API keys securely and privately. Do not share with anyone
-3. Ensure you change from the default secret hash on the Wordpress admin and apply same on the Flutterwave Dashboard
+3. Ensure the secret hash on the API & Webhook tab matches the one on your Flutterwave Dashboard. The plugin generates a random one; use the Generate button to replace it at any time
 4. Always ensure you install the most recent version of the Flutterwave Wordpress plugin
 
 = Debugging Errors =

@@ -1,4 +1,19 @@
 # Changelog
+## Unreleased
+Redesigned onboarding and settings experience.
+
+### Version Changes
+- [ADDED] A standalone Flutterwave admin screen under WooCommerce, replacing the WooCommerce gateway settings section as the place merchants configure the plugin.
+- [ADDED] A three-step setup wizard for new installs — general details, API keys and webhook, then payment methods — followed by a confirmation screen. Each step saves on its own, so a merchant who drops out halfway keeps what they entered.
+- [ADDED] A tabbed settings screen (General / API & Webhook / Payment Methods) for stores that are already configured. Merchants upgrading with keys already saved skip the wizard.
+- [ADDED] Payment methods are now individual checkboxes (Cards, Stablecoin, Bank Transfer, Mobile Money, Apple Pay, Google Pay, Opay) instead of a single-choice dropdown.
+- [ADDED] REST endpoints under `flutterwave/v1` backing the admin app, restricted to `manage_woocommerce`.
+- [CHANGED] The plugin's Settings link and the old `wc-settings&tab=checkout&section=rave` URL now lead to the new screen.
+- [CHANGED] Settings still persist to `woocommerce_rave_settings`, so the gateway, blocks integration and webhook handling are unchanged.
+- [ADDED] The Flutterwave brand fonts — Millik for headings, Moderat for body text, with Inter beneath it — self-hosted from the plugin rather than loaded from Google Fonts and jsDelivr, so wp-admin makes no third-party font requests.
+- [CHANGED] Logging and Barter toggles, and the payment options without a checkbox (USSD, QR, NQR, Credit, Barter) moved to an Advanced section on the Payment Methods tab. Existing values are preserved.
+- [CHANGED] The secret hash now sits beside the webhook URL on the API & Webhook tab, with a Generate button.
+- [SECURITY] Each store now gets its own generated secret hash. Stores still on the previous default must generate a new one (an admin notice links to it) before webhooks are accepted again.
 ## 3.3.1 | 08-09-2026
 Security release.
 
