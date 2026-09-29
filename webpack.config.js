@@ -33,6 +33,7 @@ const CLIENT_DIR = path.resolve( __dirname, 'client' );
 
 const entry = {
 	index: CLIENT_DIR + '/blocks/index.js',
+	admin: CLIENT_DIR + '/admin/index.js',
 };
 
 const rules = [

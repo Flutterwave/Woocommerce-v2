@@ -16,6 +16,7 @@ module.exports = {
 		'import/core-modules': [
 			'@woocommerce/blocks-registry',
 			'@woocommerce/settings',
+			'@wordpress/api-fetch',
 			'@wordpress/i18n',
 			'@wordpress/is-shallow-equal',
 			'@wordpress/element',

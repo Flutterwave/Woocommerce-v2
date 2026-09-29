@@ -140,7 +140,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 	 * Tests the gateway webhook on invalid transaction reference.
 	 */
 	public function test_webhook_transaction_not_found() {
-		$hash = "a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40";
+		$hash = "581e4231-441e-4730-88bf-8f181897759ea8f1";
 		$data = [
 			"event" => "charge.completed",
 			"data" => ["tx_ref" => "Rave-Pages846040622798"]
@@ -209,7 +209,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 	public function webhook_204_provider(): array {
 		return[
 			[
-				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				'581e4231-441e-4730-88bf-8f181897759ea8f1',
 				array(),
 				array(
 					'status'  => 'error',
@@ -323,7 +323,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 	
 		return [
 			[
-				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				'581e4231-441e-4730-88bf-8f181897759ea8f1',
 				array(
 					'amount' => 2000,
 					'currency' => 'NGN',
@@ -336,7 +336,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 				)
 			],
 			[
-				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				'581e4231-441e-4730-88bf-8f181897759ea8f1',
 				$wbk_request['failed'],
 				array(
 					'status'  => 'success',
@@ -344,7 +344,7 @@ class Test_FLW_WC_Payment_Gateway extends \WP_UnitTestCase {
 				)
 			],
 			[
-				'a4a6e4c86fc1347a48eeab1171f7fea1a10eecbac223b86db3b3e3e134fefa40',
+				'581e4231-441e-4730-88bf-8f181897759ea8f1',
 				$wbk_request['success'],
 				array(
 					'status'  => 'success',
