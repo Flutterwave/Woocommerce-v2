@@ -7,7 +7,7 @@
 		"postinstall": "composer install",
 		"prebuild": "npm install && composer install",
 		"build": "npm run uglify && composer run makepot && npm run build:webpack && npm run plugin-zip",
-		"build:webpack": "wp-scripts build",
+		"build:webpack": "rimraf build/* && wp-scripts build",
 		"i18n:merge": "php bin/update-pot-file-references.php i18n/languages/rave-woocommerce-payment-gateway.pot",
 		"start": "npm run start:webpack",
 		"start:webpack": "rimraf build/* && wp-scripts start",

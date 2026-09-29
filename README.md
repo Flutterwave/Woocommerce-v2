@@ -69,7 +69,7 @@ For FTP manual installation, [check here](https://wordpress.org/documentation/ar
 
 - When in doubt about a transaction, always check the Flutterwave Dashboard to confirm the status of a transaction.
 - Always ensure you keep your API keys securely and privately. Do not share with anyone.
-- Ensure you change from the default secret hash on the Wordpress admin and apply same on the Flutterwave Dashboard.
+- Ensure the secret hash on the API & Webhook tab matches the one on your Flutterwave Dashboard. The plugin generates a random one; use the Generate button to replace it at any time.
 - Always ensure you install the most recent version of the Flutterwave WooCommerce plugin.
 
 
