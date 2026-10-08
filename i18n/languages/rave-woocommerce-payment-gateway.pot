@@ -2,14 +2,14 @@
 # This file is distributed under the MIT License.
 msgid ""
 msgstr ""
-"Project-Id-Version: Flutterwave WooCommerce 3.3.1\n"
+"Project-Id-Version: Flutterwave WooCommerce 3.3.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rave-woocommerce-payment-gateway\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-23T12:13:39+00:00\n"
+"POT-Creation-Date: 2026-10-08T12:25:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rave-woocommerce-payment-gateway\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #. Translators: %s Plugin name.
 #: rave-woocommerce-payment-gateway.php
-#: includes/class-flw-wc-payment-gateway.php:280
+#: includes/class-flw-wc-payment-gateway.php:282
 #: includes/views/html-admin-missing-woocommerce.php:15
 msgid "Flutterwave WooCommerce"
 msgstr ""
@@ -42,8 +42,20 @@ msgstr ""
 msgid "http://flutterwave.com/us"
 msgstr ""
 
-#: includes/admin/class-flutterwave-admin-page.php:86
-#: includes/admin/class-flutterwave-admin-page.php:87
+#: includes/admin/class-flutterwave-admin-page.php:89
+msgid "Flutterwave: action required."
+msgstr ""
+
+#: includes/admin/class-flutterwave-admin-page.php:90
+msgid "Webhooks are paused until you set a new secret hash. Generate one, save, then add it to the webhook settings on your Flutterwave dashboard."
+msgstr ""
+
+#: includes/admin/class-flutterwave-admin-page.php:92
+msgid "Generate a new secret hash"
+msgstr ""
+
+#: includes/admin/class-flutterwave-admin-page.php:113
+#: includes/admin/class-flutterwave-admin-page.php:114
 #: client/admin/screens/Settings.js:19
 #: client/admin/screens/Welcome.js:20
 #: client/admin/screens/Wizard.js:21
@@ -154,217 +166,217 @@ msgstr ""
 msgid "Payment Reference: "
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:167
+#: includes/class-flw-wc-payment-gateway.php:169
 msgid "allows you to accept payment from cards and bank accounts in multiple currencies. You can also accept payment offline via USSD and POS."
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:284
+#: includes/class-flw-wc-payment-gateway.php:286
 msgid "Webhook Instruction"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:288
+#: includes/class-flw-wc-payment-gateway.php:290
 msgid "Please copy this webhook URL and paste on the webhook section on your dashboard"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:313
+#: includes/class-flw-wc-payment-gateway.php:315
 msgid "Enable/Disable"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:314
+#: includes/class-flw-wc-payment-gateway.php:316
 msgid "Enable Flutterwave"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:316
+#: includes/class-flw-wc-payment-gateway.php:318
 msgid "Enable Flutterwave as a payment option on the checkout page"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:321
+#: includes/class-flw-wc-payment-gateway.php:323
 msgid "Enter Secret Hash"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:323
-msgid "Please change from default hash and ensure that <b>SECRET HASH</b> is the same with the one on your Flutterwave dashboard"
+#: includes/class-flw-wc-payment-gateway.php:325
+msgid "Ensure that <b>SECRET HASH</b> is the same with the one on your Flutterwave dashboard"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:327
+#: includes/class-flw-wc-payment-gateway.php:331
 msgid "Payment method title"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:329
-#: includes/class-flw-wc-payment-gateway.php:335
+#: includes/class-flw-wc-payment-gateway.php:333
+#: includes/class-flw-wc-payment-gateway.php:339
 msgid "Optional"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:333
+#: includes/class-flw-wc-payment-gateway.php:337
 msgid "Payment method description"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:339
+#: includes/class-flw-wc-payment-gateway.php:343
 msgid "Test Public Key"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:341
+#: includes/class-flw-wc-payment-gateway.php:345
 msgid "Required! Enter your Flutterwave test public key here"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:345
+#: includes/class-flw-wc-payment-gateway.php:349
 msgid "Test Secret Key"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:347
+#: includes/class-flw-wc-payment-gateway.php:351
 msgid "Required! Enter your Flutterwave test secret key here"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:351
+#: includes/class-flw-wc-payment-gateway.php:355
 msgid "Live Public Key"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:353
+#: includes/class-flw-wc-payment-gateway.php:357
 msgid "Required! Enter your Flutterwave live public key here"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:357
+#: includes/class-flw-wc-payment-gateway.php:361
 msgid "Live Secret Key"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:359
+#: includes/class-flw-wc-payment-gateway.php:363
 msgid "Required! Enter your Flutterwave live secret key here"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:363
+#: includes/class-flw-wc-payment-gateway.php:367
 msgid "Payment Style on checkout"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:365
+#: includes/class-flw-wc-payment-gateway.php:369
 msgid "Optional - Choice of payment style to use. Either inline or redirect. (Default: inline)"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:367
+#: includes/class-flw-wc-payment-gateway.php:371
 msgctxt "payment_style"
 msgid "Popup(Keep payment experience on the website)"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:368
+#: includes/class-flw-wc-payment-gateway.php:372
 msgctxt "payment_style"
 msgid "Redirect"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:373
+#: includes/class-flw-wc-payment-gateway.php:377
 msgid "Autocomplete Order After Payment"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:374
+#: includes/class-flw-wc-payment-gateway.php:378
 msgid "Autocomplete Order"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:377
+#: includes/class-flw-wc-payment-gateway.php:381
 msgid "If enabled, the order will be marked as complete after successful payment"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:382
+#: includes/class-flw-wc-payment-gateway.php:386
 msgid "Payment Options"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:384
-msgid "Optional - Choice of payment method to use. Card, Account etc."
-msgstr ""
-
-#: includes/class-flw-wc-payment-gateway.php:386
-msgctxt "payment_options"
-msgid "All"
-msgstr ""
-
-#: includes/class-flw-wc-payment-gateway.php:387
-msgctxt "payment_options"
-msgid "Card Only"
-msgstr ""
-
 #: includes/class-flw-wc-payment-gateway.php:388
-msgctxt "payment_options"
-msgid "Account Only"
-msgstr ""
-
-#: includes/class-flw-wc-payment-gateway.php:389
-msgctxt "payment_options"
-msgid "USSD Only"
+msgid "Optional - Choice of payment method to use. Card, Account etc."
 msgstr ""
 
 #: includes/class-flw-wc-payment-gateway.php:390
 msgctxt "payment_options"
-msgid "QR Only"
+msgid "All"
 msgstr ""
 
 #: includes/class-flw-wc-payment-gateway.php:391
 msgctxt "payment_options"
-msgid "Mpesa Only"
+msgid "Card Only"
 msgstr ""
 
 #: includes/class-flw-wc-payment-gateway.php:392
 msgctxt "payment_options"
-msgid "Ghana MM Only"
+msgid "Account Only"
 msgstr ""
 
 #: includes/class-flw-wc-payment-gateway.php:393
 msgctxt "payment_options"
-msgid "Rwanda MM Only"
+msgid "USSD Only"
 msgstr ""
 
 #: includes/class-flw-wc-payment-gateway.php:394
 msgctxt "payment_options"
-msgid "Zambia MM Only"
+msgid "QR Only"
 msgstr ""
 
 #: includes/class-flw-wc-payment-gateway.php:395
 msgctxt "payment_options"
+msgid "Mpesa Only"
+msgstr ""
+
+#: includes/class-flw-wc-payment-gateway.php:396
+msgctxt "payment_options"
+msgid "Ghana MM Only"
+msgstr ""
+
+#: includes/class-flw-wc-payment-gateway.php:397
+msgctxt "payment_options"
+msgid "Rwanda MM Only"
+msgstr ""
+
+#: includes/class-flw-wc-payment-gateway.php:398
+msgctxt "payment_options"
+msgid "Zambia MM Only"
+msgstr ""
+
+#: includes/class-flw-wc-payment-gateway.php:399
+msgctxt "payment_options"
 msgid "Tanzania MM Only"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:400
+#: includes/class-flw-wc-payment-gateway.php:404
 msgid "Mode"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:401
+#: includes/class-flw-wc-payment-gateway.php:405
 msgid "Live mode"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:403
+#: includes/class-flw-wc-payment-gateway.php:407
 msgid "Check this box if you're using your live keys."
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:408
-#: includes/class-flw-wc-payment-gateway.php:409
+#: includes/class-flw-wc-payment-gateway.php:412
+#: includes/class-flw-wc-payment-gateway.php:413
 msgid "Disable Logging"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:411
+#: includes/class-flw-wc-payment-gateway.php:415
 msgid "Check this box if you're disabling logging."
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:416
-#: includes/class-flw-wc-payment-gateway.php:417
-#: client/admin/screens/forms.js:275
+#: includes/class-flw-wc-payment-gateway.php:420
+#: includes/class-flw-wc-payment-gateway.php:421
+#: client/admin/screens/forms.js:310
 msgid "Disable Barter"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:419
+#: includes/class-flw-wc-payment-gateway.php:423
 msgid "Check the box if you want to disable barter."
 msgstr ""
 
 #. translators: %s: url
-#: includes/class-flw-wc-payment-gateway.php:521
+#: includes/class-flw-wc-payment-gateway.php:525
 #, php-format
 msgid "Flutterwave is enabled, but the API keys are not set. Please <a href=\"%s\">set your Flutterwave API keys</a> to be able to accept payments."
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:570
+#: includes/class-flw-wc-payment-gateway.php:574
 msgid "We were unable to process your order, please try again."
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:619
+#: includes/class-flw-wc-payment-gateway.php:623
 msgid "Order Payment"
 msgstr ""
 
-#: includes/class-flw-wc-payment-gateway.php:877
+#: includes/class-flw-wc-payment-gateway.php:890
 msgid "A successful Flutterwave charge arrived for this cancelled order. Confirming it with Flutterwave before reopening the order."
 msgstr ""
 
@@ -573,95 +585,103 @@ msgstr ""
 msgid "Select at least one payment method."
 msgstr ""
 
-#: client/admin/screens/forms.js:37
+#: client/admin/screens/forms.js:49
 msgid "Title"
 msgstr ""
 
-#: client/admin/screens/forms.js:44
+#: client/admin/screens/forms.js:56
 msgid "Enter your title"
 msgstr ""
 
-#: client/admin/screens/forms.js:49
+#: client/admin/screens/forms.js:61
 msgid "Description"
 msgstr ""
 
-#: client/admin/screens/forms.js:53
+#: client/admin/screens/forms.js:65
 msgid "Enter your description"
 msgstr ""
 
-#: client/admin/screens/forms.js:60
+#: client/admin/screens/forms.js:72
 msgid "Checkout"
 msgstr ""
 
-#: client/admin/screens/forms.js:67
+#: client/admin/screens/forms.js:79
 msgid "Select option"
 msgstr ""
 
-#: client/admin/screens/forms.js:76
+#: client/admin/screens/forms.js:88
 msgid "Auto complete order"
 msgstr ""
 
-#: client/admin/screens/forms.js:94
+#: client/admin/screens/forms.js:109
 msgid "Test public key"
 msgstr ""
 
-#: client/admin/screens/forms.js:95
+#: client/admin/screens/forms.js:110
 msgid "Enter your test public key"
 msgstr ""
 
-#: client/admin/screens/forms.js:99
+#: client/admin/screens/forms.js:114
 msgid "Test private key"
 msgstr ""
 
-#: client/admin/screens/forms.js:100
+#: client/admin/screens/forms.js:115
 msgid "Enter your test private key"
 msgstr ""
 
-#: client/admin/screens/forms.js:104
+#: client/admin/screens/forms.js:119
 msgid "Live public key"
 msgstr ""
 
-#: client/admin/screens/forms.js:105
+#: client/admin/screens/forms.js:120
 msgid "Enter your live public key"
 msgstr ""
 
-#: client/admin/screens/forms.js:109
+#: client/admin/screens/forms.js:124
 msgid "Live private key"
 msgstr ""
 
-#: client/admin/screens/forms.js:110
+#: client/admin/screens/forms.js:125
 msgid "Enter your live private key"
 msgstr ""
 
-#: client/admin/screens/forms.js:137
+#: client/admin/screens/forms.js:152
 msgid "Webhook"
 msgstr ""
 
-#: client/admin/screens/forms.js:138
+#: client/admin/screens/forms.js:153
 msgid "Add this webhook URL to your webhook settings in your F4B dashboard."
 msgstr ""
 
-#: client/admin/screens/forms.js:150
-msgid "Enable live transactions"
-msgstr ""
-
-#: client/admin/screens/forms.js:223
-msgid "Advanced"
-msgstr ""
-
-#: client/admin/screens/forms.js:230
-msgid "Additional Flutterwave payment options and diagnostics. These are not shown at checkout unless selected."
-msgstr ""
-
-#: client/admin/screens/forms.js:250
+#: client/admin/screens/forms.js:163
 msgid "Secret hash"
 msgstr ""
 
-#: client/admin/screens/forms.js:251
-msgid "Must match the secret hash set on your Flutterwave dashboard for webhooks to be accepted."
+#: client/admin/screens/forms.js:164
+msgid "Copy this into the secret hash field of your webhook settings in your F4B dashboard. Webhooks are rejected unless the two match."
 msgstr ""
 
-#: client/admin/screens/forms.js:269
+#: client/admin/screens/forms.js:170
+msgid "Webhooks are paused until you replace this secret hash. Generate a new one, save, and update your F4B dashboard to match."
+msgstr ""
+
+#: client/admin/screens/forms.js:193
+msgid "Generate"
+msgstr ""
+
+#: client/admin/screens/forms.js:202
+msgid "Enable live transactions"
+msgstr ""
+
+#: client/admin/screens/forms.js:275
+msgid "Advanced"
+msgstr ""
+
+#: client/admin/screens/forms.js:282
+msgid "Additional Flutterwave payment options and diagnostics. These are not shown at checkout unless selected."
+msgstr ""
+
+#: client/admin/screens/forms.js:304
 msgid "Disable logging"
 msgstr ""
 
@@ -692,11 +712,11 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: client/admin/screens/Settings.js:76
+#: client/admin/screens/Settings.js:89
 msgid "Changes saved."
 msgstr ""
 
-#: client/admin/screens/Settings.js:84
+#: client/admin/screens/Settings.js:97
 #: client/admin/screens/Wizard.js:94
 msgid "Could not save your settings. Please try again."
 msgstr ""

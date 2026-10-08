@@ -3,7 +3,7 @@ Contributors: theflutterwave
 Tags: fintech,flutterwave, woocommerce, payments, nigeria, mastercard, visa, target,Naira,payments,verve,donation,church,shop,store, ghana, kenya, international, mastercard, visa
 Requires at least: 5.6
 Tested up to: 7.1.2
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 License: MIT
 License URI: https://github.com/Flutterwave/Woocommerce/blob/master/LICENSE
 

@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## 3.3.2 | 08-10-2026
 Redesigned onboarding and settings experience.
 
 ### Version Changes
