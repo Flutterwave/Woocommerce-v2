@@ -1,13 +1,13 @@
 {
 	"name": "rave-woocommerce-payment-gateway",
 	"title": "flutterwave-woocommerce",
-	"version": "3.3.1",
+	"version": "3.3.2",
 	"description": "Official WooCommerce payment gateway for Flutterwave",
 	"scripts": {
 		"postinstall": "composer install",
 		"prebuild": "npm install && composer install",
 		"build": "npm run uglify && composer run makepot && npm run build:webpack && npm run plugin-zip",
-		"build:webpack": "wp-scripts build",
+		"build:webpack": "rimraf build/* && wp-scripts build",
 		"i18n:merge": "php bin/update-pot-file-references.php i18n/languages/rave-woocommerce-payment-gateway.pot",
 		"start": "npm run start:webpack",
 		"start:webpack": "rimraf build/* && wp-scripts start",
